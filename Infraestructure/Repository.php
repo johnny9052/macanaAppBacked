@@ -217,13 +217,13 @@ class Repository extends Internationalization {
             }
 
             if ($vec[0][0] > 0) {
-                echo(json_encode(['res' => 'Success', "msg" => $this->getOperationSuccess()
+                echo(json_encode(['code' => '1', "msg" => $this->getOperationSuccess()
                 ]));
             } else {
-                echo(json_encode(['res' => 'Error', "msg" => $this->getOperationError()]));
+                echo(json_encode(['code' => '2', "msg" => $this->getOperationError()]));
             }
         } catch (PDOException $exception) {
-            echo(json_encode(['res' => 'Error', "msg" => $this->getOperationErrorForeign(),
+            echo(json_encode(['code' => '3', "msg" => $this->getOperationErrorForeign(),
                 'development' => $exception->getMessage(), 'sql' => $query]));
         }
     }
