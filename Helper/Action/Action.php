@@ -30,7 +30,7 @@ function ExecuteAction($action, $obj, $dao) {
         case "list":
             $dao->ListAll($obj, false);
             break;
-        
+
         case "listNoTable":
             $dao->ListAllNoTable($obj, false);
             break;
@@ -42,7 +42,7 @@ function ExecuteAction($action, $obj, $dao) {
         case "GeneratePDF":
             $dao->GeneratePDF($obj);
             break;
-        
+
         /* END Transaction CRUD */
 
 
@@ -61,6 +61,10 @@ function ExecuteAction($action, $obj, $dao) {
             $dao->Detail($obj);
             break;
 
+        case "updatePassword":
+            $dao->UpdatePassword($obj);
+            break;
+
 
         /* Other transactions */
         case "updatestate":
@@ -74,10 +78,8 @@ function ExecuteAction($action, $obj, $dao) {
     }
 }
 
+/* (Cadena BASE 64,ruta archivo + nombre  + extension) */
 
-
-
-/*(Cadena BASE 64,ruta archivo + nombre  + extension)*/
 function base64_to_jpeg($base64_string, $output_file) {
     $ifp = fopen($output_file, "wb");
     $data = explode(',', $base64_string);

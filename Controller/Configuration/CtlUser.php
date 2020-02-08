@@ -9,10 +9,10 @@ require '../../Infraestructure/CORS.php';
 /* RECEPCION DE DATOS */
 $action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
 $id = (isset($_POST['id']) ? $_POST['id'] : "");
-$firstName = (isset($_POST['firstName']) ? $_POST['firstName'] : "");
-$secondName = (isset($_POST['secondName']) ? $_POST['secondName'] : "");
-$firstLastName = (isset($_POST['firstLastName']) ? $_POST['firstLastName'] : "");
-$secondLastName = (isset($_POST['secondLastName']) ? $_POST['secondLastName'] : "");
+$firstName = (isset($_POST['primerNombre']) ? $_POST['primerNombre'] : "");
+$secondName = (isset($_POST['segundoNombre']) ? $_POST['segundoNombre'] : "");
+$firstLastName = (isset($_POST['primerApellido']) ? $_POST['primerApellido'] : "");
+$secondLastName = (isset($_POST['segundoApellido']) ? $_POST['segundoApellido'] : "");
 
 
 $cedula = (isset($_POST['cedula']) ? $_POST['cedula'] : "");
@@ -21,10 +21,10 @@ $celular = (isset($_POST['celular']) ? $_POST['celular'] : "");
 $foto = (isset($_POST['']) ? $_POST[''] : "");
 
 
-$user = (isset($_POST['user']) ? $_POST['user'] : "");
+$user = (isset($_POST['usuario']) ? $_POST['usuario'] : "");
 $password = (isset($_POST['password']) ? $_POST['password'] : "");
-$rol = (isset($_POST['rol']) ? $_POST['rol'] : "");
-$description = (isset($_POST['description']) ? $_POST['description'] : "");
+$rol = (isset($_POST['rolId']) ? $_POST['rolId'] : "");
+$description = (isset($_POST['descripcion']) ? $_POST['descripcion'] : "");
 
 /* DEFINICION DE OBJETOS */
 $obj = new UserDTO($id, $firstName, $secondName, $firstLastName, $secondLastName, $cedula, $correo, $celular, $foto, $user, $password, $rol, $description);
