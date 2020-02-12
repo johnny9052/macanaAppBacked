@@ -33,6 +33,20 @@ class PermissionDAO {
 
         $this->repository->ExecuteTransaction($query);
     }
+    
+    
+        /**
+     * Retorna todos los menus con sus hijos
+     * @return void      
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function LoadSimpleAllMenu() {
+        $query = $this->repository->buildQuery("loadallmenu", null);
+        $this->repository->Execute($query);
+    }
+    
+    
 
     /**
      * Retorna todos los menus con sus hijos
@@ -51,6 +65,25 @@ class PermissionDAO {
         $menu = $this->BuildPermission($padresHijos);
         echo(json_encode(["res" => $menu]));
     }
+    
+    
+    
+    
+    
+        /**
+     * Retorna todos los menus con sus hijos de un respectivo rol
+     * @param PermissionDTO $obj 
+     * @return void      
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function LoadSimplePermission(PermissionDTO $obj) {
+        $query = $this->repository->buildQuery("loadmenu", array((int) $obj->getId()));
+        $this->repository->Execute($query);
+    }
+
+    
+    
 
     /**
      * Retorna todos los menus con sus hijos de un respectivo rol

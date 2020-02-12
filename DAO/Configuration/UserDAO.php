@@ -26,10 +26,11 @@ class UserDAO {
         $query = $this->repository->buildQuerySimply("saveuser", array((int) $obj->getId(),
             (string) $obj->getFirstName(), (string) $obj->getSecondName(),
             (string) $obj->getFirstLastName(), (string) $obj->getSecondLastName(),
-            (string) $obj->getCedula(),(string) $obj->getCorreo(),
-            (string) $obj->getCelular(),(string) $obj->getFoto(),
+            (string) $obj->getCedula(), (string) $obj->getCorreo(),
+            (string) $obj->getCelular(), (string) $obj->getFoto(),
             (string) $obj->getUser(), (string) md5($obj->getPassword()),
             (int) $obj->getRol(), (string) $obj->getDescription()));
+
         $this->repository->ExecuteTransaction($query);
     }
 
@@ -68,20 +69,17 @@ class UserDAO {
         $query = $this->repository->buildQuerySimply("updateuser", array((int) $obj->getId(),
             (string) $obj->getFirstName(), (string) $obj->getSecondName(),
             (string) $obj->getFirstLastName(), (string) $obj->getSecondLastName(),
-             (string) $obj->getCedula(),(string) $obj->getCorreo(),
-            (string) $obj->getCelular(),(string) $obj->getFoto(),
+            (string) $obj->getCedula(), (string) $obj->getCorreo(),
+            (string) $obj->getCelular(), (string) $obj->getFoto(),
             (string) $obj->getUser(),
             (int) $obj->getRol(), (string) $obj->getDescription()));
         $this->repository->ExecuteTransaction($query);
     }
-    
-    
-    
-    
-        public function UpdatePassword(UserDTO $obj) {
+
+    public function UpdatePassword(UserDTO $obj) {
         $query = $this->repository->buildQuerySimply("updatepassword", array((int) $obj->getId(),
             (string) md5($obj->getPassword())
-                ));
+        ));
         $this->repository->ExecuteTransaction($query);
     }
 

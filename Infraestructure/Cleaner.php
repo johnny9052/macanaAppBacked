@@ -59,6 +59,21 @@ class Cleaner {
     private $replaceDate = [
         '-' => '', '/' => '', " " => '', ":" => ''
     ];
+    private $replaceSpanish = [
+        'ñ' => 'ni',
+        'Ñ' => 'ÑI',
+        "á" => 'a',
+        "é" => 'e',
+        "í" => 'i',
+        "ó" => 'o',
+        "ú" => 'u',
+        "Á" => 'A',
+        "É" => 'E',
+        "Í" => 'I',
+        "Ó" => 'O',
+        "Ú" => 'U',
+        ":" => ''
+    ];
 
     /**
      * Limpia una cadena de caracteres extraños
@@ -75,7 +90,12 @@ class Cleaner {
         return str_replace(array_keys($this->replaceDate), $this->replace, $value);
     }
 
+    public function cleanValueSpanish($value) {
+        return str_replace(array_keys($this->replaceSpanish), $this->replaceSpanish, $value);
+    }
+
     public function cleanValueFileName($str = '') {
+        $str = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $str);
         $str = strip_tags($str);
         $str = preg_replace('/[\r\n\t ]+/', ' ', $str);
         $str = preg_replace('/[\"\*\/\:\<\>\?\'\|]+/', ' ', $str);

@@ -1,20 +1,26 @@
 <?php
 
-/*IMPORTS*/
+/* IMPORTS */
 require '../../DAO/Configuration/PermissionDAO.php';
 require '../../DTO/Configuration/PermissionDTO.php';
+require '../../Infraestructure/CORS.php';
 
-/*RECEPCION DE DATOS*/
+/* RECEPCION DE DATOS */
 $action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
 $id = (isset($_POST['id']) ? $_POST['id'] : "");
 $permission = (isset($_POST['permission']) ? $_POST['permission'] : "");
 
-/*DEFINICION DE OBJETOS*/
+/* DEFINICION DE OBJETOS */
 $obj = new PermissionDTO($id, $permission);
 $dao = new PermissionDAO();
 
 /* CONTROL DE ACCIONES */
 switch ($action) {
+
+    case "loadSimple":
+        $dao->LoadSimpleAllMenu();
+        break;
+
     case "load":
         $dao->LoadAllMenu();
         break;
@@ -25,6 +31,9 @@ switch ($action) {
 
     case "loadPermission":
         $dao->LoadPermission($obj);
+
+    case "loadPermissionSimple":
+        $dao->LoadSimplePermission($obj);
 }
 
 
