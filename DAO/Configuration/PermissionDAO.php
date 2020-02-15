@@ -47,6 +47,20 @@ class PermissionDAO {
     }
     
     
+    
+      /**
+     * Retorna todos los menus con sus hijos
+     * @return void      
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function LoadMenuAsignados(PermissionDTO $obj) {
+        $query = $this->repository->buildQuery("listPermisosAsignados", array((int) $obj->getId()));
+        // echo $query;
+        $this->repository->Execute($query);
+    }
+    
+    
 
     /**
      * Retorna todos los menus con sus hijos

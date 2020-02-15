@@ -187,7 +187,7 @@ class Repository extends Internationalization {
                     'data' => json_encode($vec)]));
                 //echo(json_encode($vec));
             } else {
-                echo '{"res" : "NotInfo","msg":"No se encontro informacion","data":""}';
+                echo '{"res" : "NotInfo","code":"0","data":""}';
             }
         } catch (PDOException $exception) {
             /* Se captura el error de ejecucion SQL */

@@ -3,12 +3,13 @@
 /* IMPORTS */
 require '../../DAO/Configuration/PermissionDAO.php';
 require '../../DTO/Configuration/PermissionDTO.php';
+include '../../Helper/Action/Action.php';
 require '../../Infraestructure/CORS.php';
 
 /* RECEPCION DE DATOS */
-$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
-$id = (isset($_POST['id']) ? $_POST['id'] : "");
-$permission = (isset($_POST['permission']) ? $_POST['permission'] : "");
+$action = getInfo('action');
+$id = getInfo('id');
+$permission = getInfo('permission');
 
 /* DEFINICION DE OBJETOS */
 $obj = new PermissionDTO($id, $permission);
@@ -27,6 +28,10 @@ switch ($action) {
 
     case "update":
         $dao->Update($obj);
+        break;
+    
+    case "loadAsignados":
+        $dao->LoadMenuAsignados($obj);
         break;
 
     case "loadPermission":
