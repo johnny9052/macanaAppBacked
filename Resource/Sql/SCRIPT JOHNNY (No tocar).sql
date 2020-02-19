@@ -172,3 +172,150 @@ BEGIN
 END//
 
 DELIMITER ;
+
+
+
+DELIMITER //
+CREATE PROCEDURE listsexovaca(vid int)
+    COMMENT 'Procedimiento que lista las rotaciones'
+BEGIN
+   select id,nombre,observaciones
+   from sexo_vaca
+   order by id;
+END//
+
+DELIMITER ;
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listrazavaca(vid int)
+    COMMENT 'Procedimiento que lista las razas'
+BEGIN
+   select id,nombre,observaciones
+   from raza_vaca
+   order by id;
+END//
+
+DELIMITER ;
+
+
+
+DELIMITER //
+CREATE PROCEDURE listtipovaca(vid int)
+    COMMENT 'Procedimiento que lista los tipos de vacas'
+BEGIN
+   select id,nombre,observaciones
+   from tipo_animal
+   order by id;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION savevaca (vid int, 
+                          vnumero varchar(20), 
+                          vnombre varchar(30), 
+                          vidrotacion int, 
+                          vsexo int, 
+                          vraza int, 
+                          vtipoanimal int, 
+                          vedad int,                 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena una vaca'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select numero from vaca where numero=vnumero)
+		THEN
+			insert into vaca(id,numero,nombre,idrotacion,sexo,raza,tipoanimal,edad,idresponsable)
+			VALUES (vid,vnumero,vnombre,vidrotacion,vsexo,vraza,vtipoanimal,vedad,vidresponsable);
+			set res = 1;
+			
+				
+			
+		END IF;
+
+	RETURN res;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updatevaca (vid int, 
+                          vnumero varchar(20), 
+                          vnombre varchar(30), 
+                          vidrotacion int, 
+                          vsexo int, 
+                          vraza int, 
+                          vtipoanimal int, 
+                          vedad int,                 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica una vaca'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select numero from vaca where numero=vnumero and id<>vid)
+		THEN
+
+UPDATE vaca
+   SET numero=vnumero ,nombre= vnombre,idrotacion= vidrotacion,sexo=vsexo ,
+       raza= vraza,tipoanimal=vtipoanimal ,edad=vedad ,idresponsable= vidresponsable
+ WHERE id=vid;
+
+			set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` FUNCTION deletevaca(vid INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que elimina una vaca'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    DELETE FROM vaca WHERE id = vid;
+SET res = 1;
+	RETURN res;
+
+END//
+
+DELIMITER ;
+

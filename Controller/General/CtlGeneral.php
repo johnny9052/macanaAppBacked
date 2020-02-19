@@ -4,10 +4,12 @@
 require '../../DTO/General/GeneralDTO.php';
 require '../../DAO/General/GeneralDAO.php';
 include '../../Helper/Action/Load.php';
+include '../../Helper/Action/Action.php';
+require '../../Infraestructure/CORS.php';
 
 /*RECEPCION DE DATOS*/
-$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
-$id = (isset($_POST['id']) ? $_POST['id'] : "");
+$action = getInfo('action');
+$id = getInfo('id');
 
 /*DEFINICION DE OBJETOS*/
 $obj = new GeneralDTO($id);

@@ -23,7 +23,10 @@ class VacaDAO {
      */
     public function Save(VacaDTO $obj) {
         $query = $this->repository->buildQuerySimply("savevaca", array((int) $obj->getId(),
-            (string) $obj->getName(), (string) $obj->getDescription()));
+            (string) $obj->getNumero(), (string) $obj->getNombre(),
+            (int) $obj->getIdRotacion(),(int) $obj->getSexo(),
+            (int) $obj->getRaza(),(int) $obj->getTipoanimal(),
+            (int) $obj->getEdad(), (int) $obj->getIdresponsable()));
         $this->repository->ExecuteTransaction($query);
     }
 
@@ -60,8 +63,11 @@ class VacaDAO {
      * @version 0.1
      */
     public function Update(VacaDTO $obj) {
-        $query = $this->repository->buildQuerySimply("updatevaca", array((int) $obj->getId(),
-            (string) $obj->getName(), (string) $obj->getDescription()));
+         $query = $this->repository->buildQuerySimply("updatevaca", array((int) $obj->getId(),
+            (string) $obj->getNumero(), (string) $obj->getNombre(),
+            (int) $obj->getIdRotacion(),(int) $obj->getSexo(),
+            (int) $obj->getRaza(),(int) $obj->getTipoanimal(),
+            (int) $obj->getEdad(), (int) $obj->getIdresponsable()));
         $this->repository->ExecuteTransaction($query);
     }
 
