@@ -70,6 +70,8 @@ class RotacionesDAO {
             (int) $obj->getCantvacas(),
             (int) $obj->getIdresponsable()
                 ));
+        
+               // echo $query;
         $this->repository->ExecuteTransaction($query);
     }
 
