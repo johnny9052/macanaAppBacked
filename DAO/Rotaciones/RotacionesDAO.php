@@ -64,8 +64,12 @@ class RotacionesDAO {
      * @version 0.1
      */
     public function Update(RotacionesDTO $obj) {
-        $query = $this->repository->buildQuerySimply("updaterotacion", array((int) $obj->getId(),
-            (string) $obj->getName(), (string) $obj->getDescription()));
+        $query = $this->repository->buildQuerySimply("updaterotacion", array(
+            (int) $obj->getId(),
+            (string) $obj->getNombre(), 
+            (int) $obj->getCantvacas(),
+            (int) $obj->getIdresponsable()
+                ));
         $this->repository->ExecuteTransaction($query);
     }
 
