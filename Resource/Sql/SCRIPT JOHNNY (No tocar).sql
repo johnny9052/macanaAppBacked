@@ -319,3 +319,19 @@ END//
 
 DELIMITER ;
 
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listaforo(iduser int)
+    COMMENT 'Procedimiento que lista los aforos'
+BEGIN
+   select a.id,a.fecha,a.idpotrero,a.pastoalto,a.pastobajo,a.pastomedio,a.lancealto,a.lancemedio,a.lancebajo,a.cantlances,a.pesopastoalto,a.pesopastobajo,a.pesopastomedio,a.cantpasto,
+          a.porcentajealtro,a.porcentajemedio,a.porcentajebajo,a.totalmetrocuadrado,a.cantpastopotrero,a.tiempopotrero,a.observaciones,a.idresponsable, p.numero as numeropotrero
+   from aforo as a
+   inner join potrero as p on p.id = a.idpotrero
+   order by id;
+END//
+
+DELIMITER ;
