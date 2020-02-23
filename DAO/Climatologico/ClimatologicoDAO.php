@@ -25,7 +25,7 @@ class ClimatologicoDAO {
         $query = $this->repository->buildQuerySimply("saveclimatologico", array((int) $obj->getId(),
             (string) $obj->getFecha(), 
             (string) $obj->getNubosidad(),
-            (int) $obj->getPluviometria(),
+            (float) $obj->getPluviometria(),
             (string) $obj->getObservaciones(),
             (int) $obj->getIdresponsable()    
                 ));
@@ -68,7 +68,7 @@ class ClimatologicoDAO {
         $query = $this->repository->buildQuerySimply("updateclimatologico", array((int) $obj->getId(),
             (string) $obj->getFecha(), 
             (string) $obj->getNubosidad(),
-            (int) $obj->getPluviometria(),
+            (float) $obj->getPluviometria(),
             (string) $obj->getObservaciones(),
             (int) $obj->getIdresponsable()    
                 ));

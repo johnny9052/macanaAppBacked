@@ -394,3 +394,90 @@ END//
 
 DELIMITER ;
 
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS updateaforo;
+
+DELIMITER //
+CREATE FUNCTION updateaforo (vid int, 
+                          vfecha varchar(20), 
+                          vidpotrero int,
+                          vpastoalto float,
+                          vpastomedio float,
+                          vpastobajo float,                          
+                          vlancealto int,
+                          vlancemedio int,
+                          vlancebajo int,
+                          vcantlances int,
+                          vpesopastoalto float,
+                          vpesopastomedio float, 
+                          vpesopastobajo float, 
+                          vcantpasto float, 
+                          vporcentajealtro float, 
+                          vporcentajemedio float, 
+                          vporcentajebajo float, 
+                          vtotalmetrocuadrado float, 
+                          vcantpastopotrero float, 
+                          vtiempopotrero float,  
+                          vobservaciones varchar(2000), 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica un aforo'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from aforo where fecha=vfecha AND idpotrero = vidpotrero and id<>vid)
+		THEN
+
+                UPDATE aforo
+                SET fecha = vfecha, idpotrero = vidpotrero, pastoalto = vpastoalto, pastomedio = vpastomedio,
+                    pastobajo = vpastobajo,lancealto = vlancealto,lancemedio = vlancemedio,lancebajo = vlancebajo,
+                    cantlances = vcantlances, pesopastoalto = vpesopastoalto, pesopastomedio = vpesopastomedio, 
+                    pesopastobajo = vpesopastobajo, cantpasto = vcantpasto, porcentajealtro = vporcentajealtro, 
+                    porcentajemedio = vporcentajemedio, porcentajebajo = vporcentajebajo, totalmetrocuadrado = vtotalmetrocuadrado, 
+                    cantpastopotrero = vcantpastopotrero, tiempopotrero = vtiempopotrero,  observaciones = vobservaciones, 
+                    idresponsable = vidresponsable
+                WHERE id=vid;
+
+		set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE  FUNCTION deleteaforo(vid INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que elimina un aforo'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+    DELETE FROM aforo WHERE id = vid;
+    SET res = 1;
+    RETURN res;
+
+END//
+
+DELIMITER ;
+

@@ -220,11 +220,11 @@ class Repository extends Internationalization {
                 echo(json_encode(['code' => '1', "msg" => $this->getOperationSuccess()
                 ]));
             } else {
-                echo(json_encode(['code' => '2', "msg" => $this->getOperationError()]));
+                echo(json_encode(['code' => '2', "msg" => $this->getOperationErrorForeign()]));
             }
         } catch (PDOException $exception) {
-            echo(json_encode(['code' => '3', "msg" => $this->getOperationErrorForeign(),
-                'development' => $exception->getMessage(), 'sql' => $query]));
+            echo(json_encode(['code' => '3', "msg" => $this->getOperationError(),
+                'development' => $exception->getMessage()]));
         }
     }
 
