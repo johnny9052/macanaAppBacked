@@ -63,7 +63,7 @@ IF NOT EXISTS(select usuario from usuario where usuario=vuser)
 			
 		END IF;
 
-	RETURN res;
+RETURN res;
 	
 END//
 

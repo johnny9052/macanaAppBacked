@@ -22,8 +22,20 @@ class AforoDAO {
      * @version 0.1
      */
     public function Save(AforoDTO $obj) {
-        $query = $this->repository->buildQuerySimply("saveaforo", array((int) $obj->getId(),
-            (string) $obj->getName(), (string) $obj->getDescription()));
+        $query = $this->repository->buildQuerySimply("saveaforo", array(
+            (int) $obj->getId(),
+            (string) $obj->getFecha(), (int) $obj->getIdpotrero(),
+            (float) $obj->getPastoalto(), (float) $obj->getPastomedio(),
+            (float) $obj->getPastobajo(), (int) $obj->getLancealto(),
+            (int) $obj->getLancemedio(), (int) $obj->getLancebajo(),
+            (int) $obj->getCantlances(), (float) $obj->getPesopastoalto(),
+            (float) $obj->getPesopastomedio(), (float) $obj->getPesopastobajo(),
+            (float) $obj->getCantpasto(), (float) $obj->getPorcentajealtro(),
+            (float) $obj->getPorcentajemedio(), (float) $obj->getPorcentajebajo(),
+            (float) $obj->getTotalmetrocuadrado(), (float) $obj->getCantpastopotrero(),
+            (float) $obj->getTiempopotrero(), (string) $obj->getObservaciones(), 
+            (int) $obj->getIdresponsable()
+        ));
         $this->repository->ExecuteTransaction($query);
     }
 

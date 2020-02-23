@@ -1,3 +1,4 @@
+
 create table estadoclimatologico(
     id int AUTO_INCREMENT,
     fecha varchar(20),
@@ -335,3 +336,61 @@ BEGIN
 END//
 
 DELIMITER ;
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS saveaforo;
+
+DELIMITER //
+CREATE FUNCTION saveaforo (vid int, 
+                          vfecha varchar(20), 
+                          vidpotrero int,
+                          vpastoalto float,
+                          vpastomedio float,
+                          vpastobajo float,                          
+                          vlancealto int,
+                          vlancemedio int,
+                          vlancebajo int,
+                          vcantlances int,
+                          vpesopastoalto float,
+                          vpesopastomedio float, 
+                          vpesopastobajo float, 
+                          vcantpasto float, 
+                          vporcentajealtro float, 
+                          vporcentajemedio float, 
+                          vporcentajebajo float, 
+                          vtotalmetrocuadrado float, 
+                          vcantpastopotrero float, 
+                          vtiempopotrero float,  
+                          vobservaciones varchar(2000), 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena un aforo'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from aforo where fecha=vfecha AND idpotrero = vidpotrero)
+		THEN
+			insert into aforo(fecha,idpotrero,pastoalto,pastomedio,pastobajo,lancealto,lancemedio,lancebajo,
+                                          cantlances,pesopastoalto,pesopastomedio,pesopastobajo,cantpasto,porcentajealtro,
+                                          porcentajemedio,porcentajebajo,totalmetrocuadrado,cantpastopotrero,
+                                          tiempopotrero,idresponsable,observaciones)
+                        values (vfecha,vidpotrero,vpastoalto,vpastomedio,vpastobajo,vlancealto,vlancemedio,vlancebajo,vcantlances,
+                                vpesopastoalto,vpesopastomedio,vpesopastobajo,vcantpasto,vporcentajealtro,vporcentajemedio,vporcentajebajo,
+                                vtotalmetrocuadrado,vcantpastopotrero,vtiempopotrero,vidresponsable,vobservaciones);
+			set res = 1;
+			
+				
+			
+		END IF;
+
+RETURN res;
+	
+END//
+
+DELIMITER ;
+
