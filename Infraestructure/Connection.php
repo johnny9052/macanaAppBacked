@@ -25,6 +25,11 @@ class Connection {
         $this->passworddb = "admin";
         $this->database = "macanaDB";        
         $this->host = "localhost";
+        
+        //$this->userbd = "uq6w4n2azah4j";
+        //$this->passworddb = "bb[313%>g1c1";
+        //$this->database = "dbdxbar7e6xcvq";        
+        //$this->host = "localhost";
 
         try {
             $this->connect = new PDO("mysql:host=$this->host;dbname=$this->database", $this->userbd, $this->passworddb);

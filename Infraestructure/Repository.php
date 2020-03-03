@@ -9,6 +9,12 @@ require_once 'Internationalization.php';
 require_once 'Cleaner.php';
 require_once 'Connection.php';
 
+require __DIR__ . '../../Resource/html2pdfnew/vendor/autoload.php';
+
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
+
 class Repository extends Internationalization {
 
     private $con;
@@ -20,6 +26,14 @@ class Repository extends Internationalization {
         $this->clean = new Cleaner();
         $this->objCon = new Connection();
         $this->con = $this->objCon->connect();
+    }
+
+    function getObjCon() {
+        return $this->objCon;
+    }
+
+    function setObjCon($objCon) {
+        $this->objCon = $objCon;
     }
 
     /**
@@ -418,63 +432,62 @@ class Repository extends Internationalization {
         echo '[{"res" :"' . $cadenaHTML . '"}]';
     }
 
-    public function BuildPDF($query) {
+    public function BuildPDF($content, $nameFile) {
 
-        //Longitud maxima de los caracteres del listado
-        $max = 200;
+//        require_once('../../Resource/html2pdf/html2pdf.class.php'); // Se carga la libreria
+//
+//        ob_start(); //Habilita el buffer para la salida de datos 
+//        ob_get_clean(); //Limpia lo que actualmente tenga el buffer
 
-        /* Le asigno la consulta SQL a la conexion de la base de datos */
-        $resultado = $this->objCon->getConnect()->prepare($query);
-        /* Executo la consulta */
-        $resultado->execute();
-
-        /* Se meten los datos a un vector, organizados sus campos no por nombre, 
-          si no enumarados */
-        $vec = $resultado->fetchAll(PDO::FETCH_NUM);
-        //echo $resultado->columnCount() . '----' . $resultado->rowCount();
-
-        /* quedo pendiente mirar como saco todos los registros por un lado y 
-         * los campos por el otro de ser necesario, para eso si se necesita 
-         * sacar una copia de resultado despues del execute pues se hace.
-         */
-
-        require_once('../../Resource/html2pdf/html2pdf.class.php'); // Se carga la libreria
-
-        if ($resultado->rowCount() > 0) {
-
-            $descripcion = '';
-            $cadenaHTML = "<page>";
-            $cadenaHTML .= '<link href="../../Resource/Style/estilosPDF.css" type="text/css" rel="stylesheet">';
-            $cadenaHTML .= "<div><img class='logo' src='../../../Resources/public/image/logo.png'></div><br><br>";
-
-            if ($vec[0][4] != '' && $vec[0][4] != null) {
-                $cadenaHTML .= "<div><img class='imgNoticia' id='imgNoticia' src='../../../" . $vec[0][4] . "'></div>";
-            }
-
-            $cadenaHTML .= "<div><h4>" . $vec[0][1] . "</h4><br></div>";
+        $cadenaHTML = "<page backtop='40mm' backbottom='30mm' backleft='20mm' backright='20mm' footer='date;page'>";
+        $cadenaHTML .= '<link href="../../Resource/Style/estilosPDF.css" type="text/css" rel="stylesheet">';
 
 
-            $descripcion .= str_replace("\n", "<br>", $vec[0][2]);
-            $descripcionArray = explode("<br>", $descripcion);
+        $cadenaHTML .= " <page_header>
+                                <table style='width: 100%;'>
+                                    <tr>
+                                        <td>
+                                            <div><img class='logo' src='../../Resource/Images/logoPdf.png'></div>
+                                        </td>                                        
+                                    </tr>
+                                </table>
+                            </page_header>
+                            
+                            <page_footer>
+                                <table style='width: 100%;'>
+                                     <tr>
+                                        <td>
+                                            <div><img class='footer' src='../../Resource/Images/footerPdf.png'></div>
+                                        </td>                                        
+                                    </tr>
+                                </table>
+                            </page_footer>";
 
-            foreach ($descripcionArray as $valor) {
-                $cadenaHTML .= "<div><label class='descNoticia'>" . $valor . "</label></div>";
-            }
 
-            if ($vec[0][5] != '' && $vec[0][5] != null) {
-                $cadenaHTML .= "<table><tr><td><h4>Video: </h4></td><td><a>" . $vec[0][5] . "</a></td></tr></table>";
-            }
+        $cadenaHTML .= $content;
 
-            $cadenaHTML .= "</page>";
-        } else {
-            $cadenaHTML = "<label>No hay registros en la base de datos</label>";
+        $cadenaHTML .= "</page>";
+
+
+//        //formato del pdf (posicion (P=vertical L=horizontal), tamaño del pdf, lenguaje)
+//        $html2pdf = new HTML2PDF('P', 'A4', 'es');
+//        $html2pdf->WriteHTML($content); //Lo que tenga content lo pasa a pdf
+//        ob_end_clean(); // se limpia nuevamente el buffer
+//        $html2pdf->Output($nameFile . '.pdf'); //se genera el pdf, generando por defecto el nombre indicado para guardar
+
+        try {
+            /* El true indica si es o no unicode */
+            $html2pdf = new Html2Pdf('P', 'A4', 'es', 'true', 'UTF-8');
+            $html2pdf->pdf->SetDisplayMode('fullpage');
+            $html2pdf->setTestTdInOnePage(false);
+            $html2pdf->writeHTML($cadenaHTML);
+            ob_end_clean(); // se limpia nuevamente el buffer        
+            $html2pdf->output($nameFile . '.pdf');
+        } catch (Html2PdfException $e) {
+            $html2pdf->clean();
+            $formatter = new ExceptionFormatter($e);
+            echo $formatter->getHtmlMessage();
         }
-
-        //formato del pdf (posicion (P=vertical L=horizontal), tamaño del pdf, lenguaje)
-        $html2pdf = new HTML2PDF('P', 'A4', 'es');
-        $html2pdf->WriteHTML($cadenaHTML); //Lo que tenga content lo pasa a pdf
-        ob_end_clean(); // se limpia nuevamente el buffer
-        $html2pdf->Output($vec[0][1] . '.pdf'); //se genera el pdf, generando por defecto el nombre indicado para guardar
     }
 
     /* Funciones para correo electronico */
@@ -505,6 +518,7 @@ class Repository extends Internationalization {
         mail($this->emailSystem, 'Mensaje de: ' . $titulo, $mensaje);
     }
 
+   
     /**
      * Ejecuta una consulta sql y retorna un archivo CSV con todos los datos
      * @return file.csv Retorna el archivo CSV con todos los datos

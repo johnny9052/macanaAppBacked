@@ -2,7 +2,7 @@
 
 /*IMPORTS*/
 require '../../DTO/Potrero/PotreroDTO.php';
-require '../../DAO/Potrero/PotreroDao.php';
+require '../../DAO/Potrero/PotreroDAO.php';
 include '../../Helper/Action/Action.php';
 require '../../Infraestructure/CORS.php';
 

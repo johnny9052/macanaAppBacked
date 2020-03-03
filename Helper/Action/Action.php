@@ -39,8 +39,8 @@ function ExecuteAction($action, $obj, $dao) {
             $dao->ListAll($obj, true);
             break;
 
-        case "GeneratePDF":
-            $dao->GeneratePDF($obj);
+        case "generatePDFList":
+            $dao->GeneratePDFList($obj);
             break;
 
         /* END Transaction CRUD */
@@ -48,8 +48,8 @@ function ExecuteAction($action, $obj, $dao) {
 
         /* Other transactions */
 
-        case "reportcsv":
-            $dao->ReportCSV($obj);
+        case "reportCSVList":
+            $dao->ReportCSVList($obj);
             break;
 
 

@@ -1,0 +1,73 @@
+.logo{
+    width: 170px;
+    height: 131px;
+    float: right;
+}
+
+
+.imgPropertie{
+    width: 170px;
+    height: 131px;
+    text-align: center;
+}
+
+.footer{
+    width: 100%;    
+}
+
+.titulo{
+    width:100%; 
+    text-align: center;
+    letter-spacing: 15px;
+    line-height: 1.3;
+    word-spacing: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+
+.subtitulo{
+    width:100%; 
+    text-align: left;
+    letter-spacing: 15px;
+    line-height: 1.3;
+    word-spacing: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+
+.minisubtitulo{
+    width:100%; 
+    text-align: left;
+    letter-spacing: 15px;
+    line-height: 1.3;
+    word-spacing: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;    
+}
+
+
+
+/*TABLA*/
+
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;    
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #0B2161;
+    color: white;
+}

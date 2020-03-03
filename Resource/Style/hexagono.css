@@ -1,0 +1,40 @@
+#hexagon {
+    width: 66px;
+    height: 104px;
+    background: rgba(49,176,213,1);
+    position: relative;
+    z-index:-1;
+    margin:0 auto;
+}
+#hexagon:before {
+    content: "";
+    left:-66px;
+    display:block;
+    position: relative;
+    border-right: 30px solid rgba(49,176,213,1);
+    border-top: 52px solid transparent;
+    border-bottom: 52px solid transparent;
+}
+#hexagon:after {
+    content: "";
+    right:-66px;
+    top:-104px;
+    position: relative;
+    display:block;
+    border-left: 30px solid rgba(49,176,213,1);
+    border-top: 52px solid transparent;
+    border-bottom: 52px solid transparent;
+}
+.hex-over {
+    z-index:5;
+    position:relative;
+    width:100%;
+    top:-100px;
+    text-align:center;
+    color:#fdfdfd;
+    font-size:69px;
+    padding:0 0px 1px 0px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
