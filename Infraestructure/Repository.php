@@ -518,7 +518,6 @@ class Repository extends Internationalization {
         mail($this->emailSystem, 'Mensaje de: ' . $titulo, $mensaje);
     }
 
-   
     /**
      * Ejecuta una consulta sql y retorna un archivo CSV con todos los datos
      * @return file.csv Retorna el archivo CSV con todos los datos
@@ -527,7 +526,7 @@ class Repository extends Internationalization {
      * @author Johnny Alexander Salazar
      * @version 0.5
      */
-    public function BuildReportCSV($query, $fileName) {
+    public function BuildReportCSV($query, $fileName, $caracter) {
         /* Se define la zona horaria en Colombia para generar el archivo */
         date_default_timezone_set("America/Bogota");
         /* Se genera el nombre del archivo con la fecha y hora de la generacion */
@@ -553,7 +552,7 @@ class Repository extends Internationalization {
             for ($cont = 0; $cont < $resultado->columnCount(); $cont++) {
                 $col = $resultado->getColumnMeta($cont);
                 //Coloca la cabecera reempleazando los guiones bajos con espacios
-                $content .= $col['name'] . ";";
+                $content .= $col['name'] . $caracter;
             }
 
             /* Enter para separar cabecera de los registros */
@@ -562,7 +561,7 @@ class Repository extends Internationalization {
             /* Se sacan los registros */
             for ($cont = 0; $cont < sizeof($vec); $cont++) { //recorre registro por registro
                 for ($posreg = 0; $posreg < $resultado->columnCount(); $posreg++) {//por cada valor del registro
-                    $content .= $vec[$cont][$posreg] . ';';
+                    $content .= $vec[$cont][$posreg] . $caracter;
                 }
                 /* Enter para separar los diferentes registros */
                 $content .= "\n";

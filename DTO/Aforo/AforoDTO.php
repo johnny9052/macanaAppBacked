@@ -26,8 +26,11 @@ class AforoDTO extends BaseDTO {
     private $tiempopotrero;
     private $observaciones;
     private $idresponsable;
+    
+    private $caracter;
 
-    function __construct($id, $fecha, $idpotrero, $pastoalto, $pastobajo, $pastomedio, $lancealto, $lancemedio, $lancebajo, $cantlances, $pesopastoalto, $pesopastobajo, $pesopastomedio, $cantpasto, $porcentajealtro, $porcentajemedio, $porcentajebajo, $totalmetrocuadrado, $cantpastopotrero, $tiempopotrero, $observaciones, $idresponsable) {
+  
+    function __construct($id, $fecha, $idpotrero, $pastoalto, $pastobajo, $pastomedio, $lancealto, $lancemedio, $lancebajo, $cantlances, $pesopastoalto, $pesopastobajo, $pesopastomedio, $cantpasto, $porcentajealtro, $porcentajemedio, $porcentajebajo, $totalmetrocuadrado, $cantpastopotrero, $tiempopotrero, $observaciones, $idresponsable, $caracter) {
         $this->id = $id;
         $this->fecha = $fecha;
         $this->idpotrero = $idpotrero;
@@ -50,8 +53,10 @@ class AforoDTO extends BaseDTO {
         $this->tiempopotrero = $tiempopotrero;
         $this->observaciones = $observaciones;
         $this->idresponsable = $idresponsable;
+        $this->caracter = $caracter;
     }
-
+    
+    
     function getId() {
         return $this->id;
     }
@@ -138,6 +143,10 @@ class AforoDTO extends BaseDTO {
 
     function getIdresponsable() {
         return $this->idresponsable;
+    }
+
+    function getCaracter() {
+        return $this->caracter;
     }
 
     function setId($id) {
@@ -227,5 +236,12 @@ class AforoDTO extends BaseDTO {
     function setIdresponsable($idresponsable) {
         $this->idresponsable = $idresponsable;
     }
+
+    function setCaracter($caracter) {
+        $this->caracter = $caracter;
+    }
+
+
+
 
 }
