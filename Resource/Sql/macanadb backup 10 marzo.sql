@@ -1,32 +1,10 @@
--- phpMyAdmin SQL Dump
--- version 4.0.4
--- http://www.phpmyadmin.net
---
--- Servidor: localhost
--- Tiempo de generación: 11-03-2020 a las 01:44:26
--- Versión del servidor: 5.6.12-log
--- Versión de PHP: 5.4.16
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Base de datos: `macanadb`
---
-CREATE DATABASE IF NOT EXISTS `macanadb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `macanadb`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listaforo`(iduser int)
+CREATE  PROCEDURE `listaforo`(iduser int)
     COMMENT 'Procedimiento que lista los aforos'
 BEGIN
    select a.id,a.fecha,a.idpotrero,a.pastoalto,a.pastobajo,a.pastomedio,a.lancealto,a.lancemedio,a.lancebajo,a.cantlances,a.pesopastoalto,a.pesopastobajo,a.pesopastomedio,a.cantpasto,
@@ -36,7 +14,7 @@ BEGIN
    order by id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listaforocsv`(IN `iduser` INT)
+CREATE  PROCEDURE `listaforocsv`(IN `iduser` INT)
     COMMENT 'Procedimiento que lista los aforos'
 BEGIN
    select p.numero as numeropotrero, a.fecha,a.pastoalto,a.pastobajo,a.pastomedio,a.lancealto,a.lancemedio,a.lancebajo,a.cantlances,a.pesopastoalto,a.pesopastobajo,a.pesopastomedio,a.cantpasto,
@@ -46,7 +24,7 @@ BEGIN
    order by id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listclimatologico`(iduser int)
+CREATE  PROCEDURE `listclimatologico`(iduser int)
     COMMENT 'Procedimiento que lista los cambios climatologicos'
 BEGIN
    select id, fecha,nubosidad, pluviometria, observaciones, idresponsable
@@ -54,7 +32,7 @@ BEGIN
    order by id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listPermisosAsignados`(vidrol int)
+CREATE  PROCEDURE `listPermisosAsignados`(vidrol int)
     COMMENT 'Procedimiento que lista los menus asignados a un rol'
 BEGIN
    select idrol, idmenu
@@ -62,7 +40,7 @@ BEGIN
    where idrol = vidrol;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listpotrero`(IN `iduser` INT)
+CREATE  PROCEDURE `listpotrero`(IN `iduser` INT)
     COMMENT 'Procedimiento que lista los potreros'
 BEGIN
    select p.id as id, p.numero as numero,p.area as area, 
@@ -73,7 +51,7 @@ BEGIN
    order by id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listrazavaca`(vid int)
+CREATE  PROCEDURE `listrazavaca`(vid int)
     COMMENT 'Procedimiento que lista las razas'
 BEGIN
    select id,nombre,observaciones
@@ -81,7 +59,7 @@ BEGIN
    order by id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listrol`(iduser int)
+CREATE  PROCEDURE `listrol`(iduser int)
     COMMENT 'Procedimiento que lista los roles de un determinado usuario'
 BEGIN
    select id,nombre as nombre_rol,descripcion 
@@ -89,7 +67,7 @@ BEGIN
    order by nombre;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listrotacion`(iduser int)
+CREATE  PROCEDURE `listrotacion`(iduser int)
     COMMENT 'Procedimiento que lista las rotaciones'
 BEGIN
    select id,nombre,cantvacas,idresponsable
@@ -97,7 +75,7 @@ BEGIN
    order by id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listsexovaca`(vid int)
+CREATE  PROCEDURE `listsexovaca`(vid int)
     COMMENT 'Procedimiento que lista las rotaciones'
 BEGIN
    select id,nombre,observaciones
@@ -105,7 +83,7 @@ BEGIN
    order by id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listtipovaca`(vid int)
+CREATE  PROCEDURE `listtipovaca`(vid int)
     COMMENT 'Procedimiento que lista los tipos de vacas'
 BEGIN
    select id,nombre,observaciones
@@ -113,7 +91,7 @@ BEGIN
    order by id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listuser`(IN `iduser` INT)
+CREATE  PROCEDURE `listuser`(IN `iduser` INT)
     DETERMINISTIC
     COMMENT 'Procedimiento que lista los usuarios'
 BEGIN
@@ -138,7 +116,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listvaca`(iduser int)
+CREATE  PROCEDURE `listvaca`(iduser int)
     COMMENT 'Procedimiento que lista las vacas'
 BEGIN
    select id,numero,nombre,idrotacion,sexo,raza,tipoanimal,edad,idresponsable
@@ -146,7 +124,7 @@ BEGIN
    order by id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `loadallmenu`()
+CREATE  PROCEDURE `loadallmenu`()
     COMMENT 'Procedimiento que lista todos los menus del sistema'
 BEGIN
    
@@ -157,7 +135,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `loadapage`(IN `vpage` VARCHAR(2000), IN `vrol` INT)
+CREATE  PROCEDURE `loadapage`(IN `vpage` VARCHAR(2000), IN `vrol` INT)
     COMMENT 'Procedimiento que lista los menus'
 BEGIN
    
@@ -168,7 +146,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `loadmenu`(IN `rol` INT)
+CREATE  PROCEDURE `loadmenu`(IN `rol` INT)
     COMMENT 'Procedimiento que lista los menus de un determinado rol'
 BEGIN
    
@@ -180,7 +158,7 @@ BEGIN
 	order by m.prioridad;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `loadrol`(IN `idfilter` INT)
+CREATE  PROCEDURE `loadrol`(IN `idfilter` INT)
     COMMENT 'Procedimiento que lista los roles'
 BEGIN
  
@@ -200,7 +178,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `login`(IN `usu` VARCHAR(50), IN `pass` VARCHAR(50))
+CREATE  PROCEDURE `login`(IN `usu` VARCHAR(50), IN `pass` VARCHAR(50))
     COMMENT 'Procedimiento que valida las credenciales de un usuairo'
 BEGIN
    select u.usuario,u.primer_nombre,u.primer_apellido,u.rol,u.id,r.nombre as rol_nombre,u.foto
@@ -209,7 +187,7 @@ BEGIN
    where password=pass and usuario=usu;		
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `searchrol`(idrol int)
+CREATE  PROCEDURE `searchrol`(idrol int)
     COMMENT 'Procedimiento que carga la informacion de un rol'
 BEGIN
  
@@ -220,7 +198,7 @@ BEGIN
 	
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `searchuser`(vid int)
+CREATE  PROCEDURE `searchuser`(vid int)
     COMMENT 'Procedimiento que carga la informacion de un usuario'
 BEGIN
  	
@@ -234,7 +212,7 @@ END$$
 --
 -- Funciones
 --
-CREATE DEFINER=`root`@`localhost` FUNCTION `deleteaforo`(vid INT) RETURNS int(1)
+CREATE  FUNCTION `deleteaforo`(vid INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que elimina un aforo'
@@ -247,7 +225,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `deleteclimatologico`(vid INT) RETURNS int(1)
+CREATE  FUNCTION `deleteclimatologico`(vid INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que elimina un estado climatologico'
@@ -259,7 +237,7 @@ SET res = 1;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `deletepotrero`(vid INT) RETURNS int(1)
+CREATE  FUNCTION `deletepotrero`(vid INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que elimina un potrero'
@@ -271,7 +249,7 @@ SET res = 1;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `deleterol`(cod INT) RETURNS int(1)
+CREATE  FUNCTION `deleterol`(cod INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que elimina un rol'
@@ -282,7 +260,7 @@ BEGIN
 	RETURN res;
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `deleterotacion`(vid INT) RETURNS int(1)
+CREATE  FUNCTION `deleterotacion`(vid INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que elimina una rotacion'
@@ -294,7 +272,7 @@ SET res = 1;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `deleteuser`(vid INT) RETURNS int(1)
+CREATE  FUNCTION `deleteuser`(vid INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que elimina un usuario'
@@ -305,7 +283,7 @@ SET res = 1;
 	RETURN res;
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `deletevaca`(vid INT) RETURNS int(1)
+CREATE  FUNCTION `deletevaca`(vid INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que elimina una vaca'
@@ -317,7 +295,7 @@ SET res = 1;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `saveaforo`(vid int, 
+CREATE  FUNCTION `saveaforo`(vid int, 
                           vfecha varchar(20), 
                           vidpotrero int,
                           vpastoalto float,
@@ -364,7 +342,7 @@ RETURN res;
 	
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `saveclimatologico`(`id` INT, `vfecha` VARCHAR(20), `vnubosidad` VARCHAR(20), `vpluviometria` FLOAT, `vobservaciones` VARCHAR(2000), `vidresponsable` INT) RETURNS int(1)
+CREATE  FUNCTION `saveclimatologico`(`id` INT, `vfecha` VARCHAR(20), `vnubosidad` VARCHAR(20), `vpluviometria` FLOAT, `vobservaciones` VARCHAR(2000), `vidresponsable` INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que almacena un estado climatologico'
@@ -386,7 +364,7 @@ IF NOT EXISTS(select fecha from estadoclimatologico where fecha=vfecha)
 	
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `savepotrero`(`vid` INT(11), `vnumero` INT(11), `varea` FLOAT(11), `vobservacion` VARCHAR(2000), `vidrotacion` INT(11), `vidresponsable` INT(11)) RETURNS int(1)
+CREATE  FUNCTION `savepotrero`(`vid` INT(11), `vnumero` INT(11), `varea` FLOAT(11), `vobservacion` VARCHAR(2000), `vidrotacion` INT(11), `vidresponsable` INT(11)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que almacena un potrero'
@@ -411,7 +389,7 @@ IF NOT EXISTS(select numero from potrero where numero=vnumero)
 	
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `saverol`(cod INT,nom varchar(50),des varchar(2000)) RETURNS int(1)
+CREATE  FUNCTION `saverol`(cod INT,nom varchar(50),des varchar(2000)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que almacena un rol'
@@ -430,7 +408,7 @@ IF NOT EXISTS(select nombre from rol where nombre=nom)
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `saverotacion`(vid int, 
+CREATE  FUNCTION `saverotacion`(vid int, 
                           vnombre varchar(50), 
                           vcantvacas int(11), 
                           vidresponsable int(11)) RETURNS int(1)
@@ -452,7 +430,7 @@ IF NOT EXISTS(select  nombre from rotacion where nombre=vnombre)
 	
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `saveuser`(`id` INT, `vfirstname` VARCHAR(50), `vsecondname` VARCHAR(50), `vfirstlastname` VARCHAR(50), `vsecondlastname` VARCHAR(50), `vcedula` VARCHAR(50), `vcorreo` VARCHAR(50), `vcelular` VARCHAR(50), `vfoto` VARCHAR(200), `vuser` VARCHAR(50), `vpass` VARCHAR(50), `vrol` INT, `vdescription` VARCHAR(50)) RETURNS int(1)
+CREATE  FUNCTION `saveuser`(`id` INT, `vfirstname` VARCHAR(50), `vsecondname` VARCHAR(50), `vfirstlastname` VARCHAR(50), `vsecondlastname` VARCHAR(50), `vcedula` VARCHAR(50), `vcorreo` VARCHAR(50), `vcelular` VARCHAR(50), `vfoto` VARCHAR(200), `vuser` VARCHAR(50), `vpass` VARCHAR(50), `vrol` INT, `vdescription` VARCHAR(50)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que almacena un usuario'
@@ -477,7 +455,7 @@ IF NOT EXISTS(select usuario from usuario where usuario=vuser)
 	
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `savevaca`(vid int, 
+CREATE  FUNCTION `savevaca`(vid int, 
                           vnumero varchar(20), 
                           vnombre varchar(30), 
                           vidrotacion int, 
@@ -506,7 +484,7 @@ IF NOT EXISTS(select numero from vaca where numero=vnumero)
 	
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updateaforo`(vid int, 
+CREATE  FUNCTION `updateaforo`(vid int, 
                           vfecha varchar(20), 
                           vidpotrero int,
                           vpastoalto float,
@@ -557,7 +535,7 @@ IF NOT EXISTS(select id from aforo where fecha=vfecha AND idpotrero = vidpotrero
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updateclimatologico`(`vid` INT, `vfecha` VARCHAR(20), `vnubosidad` VARCHAR(20), `vpluviometria` FLOAT, `vobservaciones` VARCHAR(2000), `vidresponsable` INT) RETURNS int(1)
+CREATE  FUNCTION `updateclimatologico`(`vid` INT, `vfecha` VARCHAR(20), `vnubosidad` VARCHAR(20), `vpluviometria` FLOAT, `vobservaciones` VARCHAR(2000), `vidresponsable` INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que modifica un estado climatologico'
@@ -581,7 +559,7 @@ UPDATE estadoclimatologico
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updatepassword`(vid int, vpass varchar(50)) RETURNS int(1)
+CREATE  FUNCTION `updatepassword`(vid int, vpass varchar(50)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que actualiza el password del usuario'
@@ -601,7 +579,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updatepermission`(vid integer, vpermission varchar(2000)) RETURNS int(1)
+CREATE  FUNCTION `updatepermission`(vid integer, vpermission varchar(2000)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que actualiza los permisos de un rol'
@@ -629,7 +607,7 @@ BEGIN
     RETURN res;	
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updatepotrero`(`vid` INT(11), `vnumero` INT(11), `varea` FLOAT(11), `vobservacion` VARCHAR(2000), `vidrotacion` INT(11), `vidresponsable` INT(11)) RETURNS int(1)
+CREATE  FUNCTION `updatepotrero`(`vid` INT(11), `vnumero` INT(11), `varea` FLOAT(11), `vobservacion` VARCHAR(2000), `vidrotacion` INT(11), `vidresponsable` INT(11)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que modifica un potrero'
@@ -653,7 +631,7 @@ UPDATE potrero
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updaterol`(cod INT,nom varchar(50),des varchar(2000)) RETURNS int(1)
+CREATE  FUNCTION `updaterol`(cod INT,nom varchar(50),des varchar(2000)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que modifica un rol'
@@ -672,7 +650,7 @@ IF NOT EXISTS(select nombre from rol where nombre=nom and id<>cod)
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updaterotacion`(vid int, 
+CREATE  FUNCTION `updaterotacion`(vid int, 
                           vnombre varchar(50), 
                           vcantvacas int(11), 
                           vidresponsable int(11)) RETURNS int(1)
@@ -699,7 +677,7 @@ UPDATE rotacion
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updateuser`(`vid` INT, `vfirstname` VARCHAR(50), `vsecondname` VARCHAR(50), `vfirstlastname` VARCHAR(50), `vsecondlastname` VARCHAR(50), `vcedula` VARCHAR(50), `vcorreo` VARCHAR(50), `vcelular` VARCHAR(50), `vfoto` VARCHAR(200), `vuser` VARCHAR(50), `vrol` INT, `vdescription` VARCHAR(50)) RETURNS int(1)
+CREATE  FUNCTION `updateuser`(`vid` INT, `vfirstname` VARCHAR(50), `vsecondname` VARCHAR(50), `vfirstlastname` VARCHAR(50), `vsecondlastname` VARCHAR(50), `vcedula` VARCHAR(50), `vcorreo` VARCHAR(50), `vcelular` VARCHAR(50), `vfoto` VARCHAR(200), `vuser` VARCHAR(50), `vrol` INT, `vdescription` VARCHAR(50)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que modifica un usuario'
@@ -725,7 +703,7 @@ UPDATE usuario
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updatevaca`(vid int, 
+CREATE  FUNCTION `updatevaca`(vid int, 
                           vnumero varchar(20), 
                           vnombre varchar(30), 
                           vidrotacion int, 
@@ -1391,6 +1369,3 @@ ALTER TABLE `vaca`
   ADD CONSTRAINT `vaca_sexo_fk` FOREIGN KEY (`sexo`) REFERENCES `sexo_vaca` (`id`),
   ADD CONSTRAINT `vaca_tipoanimal_fk` FOREIGN KEY (`tipoanimal`) REFERENCES `tipo_animal` (`id`);
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
