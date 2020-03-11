@@ -11,7 +11,7 @@ class ContentDAO {
 
     private $repository;
 
-    function ContentDAO() {
+    function __construct() {
         require_once '../../Infraestructure/Repository.php';
         $this->repository = new Repository();
     }

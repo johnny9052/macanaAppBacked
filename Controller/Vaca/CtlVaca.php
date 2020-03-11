@@ -3,7 +3,7 @@
 /*IMPORTS*/
 require '../../DTO/Vaca/VacaDTO.php';
 require '../../DAO/Vaca/VacaDAO.php';
-include '../../Helper/Action/Action.php';
+require '../../Helper/Action/Action.php';
 require '../../Infraestructure/CORS.php';
 
 /*RECEPCION DE DATOS*/

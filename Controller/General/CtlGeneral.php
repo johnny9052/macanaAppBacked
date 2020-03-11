@@ -3,8 +3,8 @@
 /*IMPORTS*/
 require '../../DTO/General/GeneralDTO.php';
 require '../../DAO/General/GeneralDAO.php';
-include '../../Helper/Action/Load.php';
-include '../../Helper/Action/Action.php';
+require '../../Helper/Action/Load.php';
+require '../../Helper/Action/Action.php';
 require '../../Infraestructure/CORS.php';
 
 /*RECEPCION DE DATOS*/

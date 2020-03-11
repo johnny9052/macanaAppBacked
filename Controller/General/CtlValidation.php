@@ -3,7 +3,7 @@
 /*IMPORTS*/
 require '../../DTO/General/ValidationDTO.php';
 require '../../DAO/General/ValidationDAO.php';
-include '../../Helper/Action/Validation.php';
+require '../../Helper/Action/Validation.php';
 
 /*RECEPCION DE DATOS*/
 $action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");

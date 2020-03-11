@@ -6,7 +6,7 @@ class ContentDTO extends BaseDTO {
     
     private $page;
 
-    public function __Construct($page, $rol) {
+    public function __construct($page, $rol) {
         $this->page = $page;
         $this->IdRol = $rol;
     }

@@ -7,7 +7,7 @@ class PermissionDTO extends BaseDTO {
     private $id;
     private $permission;
 
-    public function __Construct($id, $permission) {
+    public function __construct($id, $permission) {
         $this->id = $id;
         $this->permission = $permission;
     }

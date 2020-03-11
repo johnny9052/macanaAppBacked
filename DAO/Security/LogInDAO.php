@@ -9,7 +9,7 @@ class LogInDAO {
 
     private $repository;
 
-    function LogInDAO() {
+    function __construct() {
         require_once '../../Infraestructure/Repository.php';
         $this->repository = new Repository();
     }

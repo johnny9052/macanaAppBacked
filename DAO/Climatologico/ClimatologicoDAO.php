@@ -9,7 +9,7 @@ class ClimatologicoDAO {
 
     private $repository;
 
-    function ClimatologicoDAO() {
+    function __construct() {
         require_once '../../Infraestructure/Repository.php';
         $this->repository = new Repository();
     }

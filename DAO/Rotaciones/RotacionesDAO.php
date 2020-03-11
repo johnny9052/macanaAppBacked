@@ -9,7 +9,7 @@ class RotacionesDAO {
 
     private $repository;
 
-    function RotacionesDAO() {
+    function __construct() {
         require_once '../../Infraestructure/Repository.php';
         $this->repository = new Repository();
     }

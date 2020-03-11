@@ -3,7 +3,7 @@
 /*IMPORTS*/
 require '../../DTO/Rotaciones/RotacionesDTO.php';
 require '../../DAO/Rotaciones/RotacionesDAO.php';
-include '../../Helper/Action/Action.php';
+require '../../Helper/Action/Action.php';
 require '../../Infraestructure/CORS.php';
 
 /*RECEPCION DE DATOS*/
