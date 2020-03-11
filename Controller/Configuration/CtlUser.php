@@ -4,8 +4,8 @@
 include '../../Infraestructure/CORS.php';
 require '../../DTO/Configuration/UserDTO.php';
 require '../../DAO/Configuration/UserDAO.php';
-include '../../Helper/Action/Action.php';
-include '../../Infraestructure/Cleaner.php';
+require '../../Helper/Action/Action.php';
+require '../../Infraestructure/Cleaner.php';
 
 
 /* RECEPCION DE DATOS */

@@ -9,7 +9,7 @@ class PotreroDAO {
 
     private $repository;
 
-    function PotreroDAO() {
+    function __construct() {
         require_once '../../Infraestructure/Repository.php';
         $this->repository = new Repository();
     }

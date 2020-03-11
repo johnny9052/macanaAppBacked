@@ -7,7 +7,7 @@ class LogInDTO extends BaseDTO{
     private $user;
     private $password;
 
-    public function __Construct($user, $password) {
+    public function __construct($user, $password) {
         $this->user = $user;
         $this->password = $password;        
     }

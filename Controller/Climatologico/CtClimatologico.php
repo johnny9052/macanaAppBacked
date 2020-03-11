@@ -1,10 +1,11 @@
 <?php
 
 /*IMPORTS*/
+require '../../Infraestructure/CORS.php';
 require '../../DTO/Climatologico/ClimatologicoDTO.php';
 require '../../DAO/Climatologico/ClimatologicoDAO.php';
-include '../../Helper/Action/Action.php';
-require '../../Infraestructure/CORS.php';
+require '../../Helper/Action/Action.php';
+
 
 /*RECEPCION DE DATOS*/
 $action = getInfo('action');

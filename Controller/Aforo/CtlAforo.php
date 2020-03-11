@@ -1,10 +1,10 @@
 <?php
 
 /* IMPORTS */
+require '../../Infraestructure/CORS.php';
 require '../../DTO/Aforo/AforoDTO.php';
 require '../../DAO/Aforo/AforoDAO.php';
-include '../../Helper/Action/Action.php';
-require '../../Infraestructure/CORS.php';
+require '../../Helper/Action/Action.php';
 
 /* RECEPCION DE DATOS */
 $action = getInfo('action');

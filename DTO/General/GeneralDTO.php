@@ -6,7 +6,7 @@ class GeneralDTO extends BaseDTO {
 
     private $id;
 
-    public function __Construct($id) {
+    public function __construct($id) {
         $this->id = $id;
     }
 

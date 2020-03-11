@@ -10,7 +10,7 @@ class logOutDAO {
     private $con;
     private $objCon;
 
-    function logOutDAO() {
+    function __construct() {
         require '../../Infraestructure/Connection.php';
         $this->objCon = new Connection();
         $this->con = $this->objCon->connect();

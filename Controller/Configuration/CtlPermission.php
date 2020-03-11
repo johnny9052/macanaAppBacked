@@ -1,10 +1,11 @@
 <?php
 
 /* IMPORTS */
+require '../../Infraestructure/CORS.php';
 require '../../DAO/Configuration/PermissionDAO.php';
 require '../../DTO/Configuration/PermissionDTO.php';
-include '../../Helper/Action/Action.php';
-require '../../Infraestructure/CORS.php';
+require '../../Helper/Action/Action.php';
+
 
 /* RECEPCION DE DATOS */
 $action = getInfo('action');
