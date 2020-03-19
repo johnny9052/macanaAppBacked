@@ -1,31 +1,32 @@
 <?php
 
 /* IMPORTS */
+require '../../Infraestructure/CORS.php';
 require '../../DTO/Security/LogInDTO.php';
 require '../../DAO/Security/LogInDAO.php';
-require '../../Infraestructure/CORS.php';
+require '../../Helper/Action/Action.php';
+require '../../Infraestructure/Security.php';
 
 /* RECEPCION DE DATOS */
-$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
-$usuario = (isset($_POST['username']) ? $_POST['username'] : "");
-$password = (isset($_POST['password']) ? $_POST['password'] : "");
+$action = getInfo('action');
+$usuario = getInfo('username');
+$password = getInfo('password');
 
 
-/* DEFINICION DE OBJETOS */
-$obj = new LogInDTO($usuario, $password);
-$conex = new LogInDAO();
+/*RECEPCION DEL TOKEN*/
+$token = getInfo('token');
+$security = new Security();
 
+if ($security->validarTokenUser($token)) {
+    /* DEFINICION DE OBJETOS */
+    $obj = new LogInDTO($usuario, $password);
+    $conex = new LogInDAO();
 
-/* CONTROL DE ACCIONES */
+    /* CONTROL DE ACCIONES */
+    switch ($action) {
 
-
-switch ($action) {
-    
-    case "logIn":
-        $conex->SignIn($obj);
-        break;
-}
-
-
-
-
+        case "logIn":
+            $conex->SignIn($obj);
+            break;
+    }
+} 

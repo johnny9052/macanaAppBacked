@@ -5,43 +5,50 @@ require '../../Infraestructure/CORS.php';
 require '../../DAO/Configuration/PermissionDAO.php';
 require '../../DTO/Configuration/PermissionDTO.php';
 require '../../Helper/Action/Action.php';
-
+require '../../Infraestructure/Security.php';
 
 /* RECEPCION DE DATOS */
 $action = getInfo('action');
 $id = getInfo('id');
 $permission = getInfo('permission');
 
-/* DEFINICION DE OBJETOS */
-$obj = new PermissionDTO($id, $permission);
-$dao = new PermissionDAO();
+/* RECEPCION DEL TOKEN */
+$token = getInfo('token');
+$security = new Security();
 
-/* CONTROL DE ACCIONES */
-switch ($action) {
 
-    case "loadSimple":
-        $dao->LoadSimpleAllMenu();
-        break;
+if ($security->validarTokenUser($token)) {
 
-    case "load":
-        $dao->LoadAllMenu();
-        break;
+    /* DEFINICION DE OBJETOS */
+    $obj = new PermissionDTO($id, $permission);
+    $dao = new PermissionDAO();
 
-    case "update":
-        $dao->Update($obj);
-        break;
-    
-    case "loadAsignados":
-        $dao->LoadMenuAsignados($obj);
-        break;
+    /* CONTROL DE ACCIONES */
+    switch ($action) {
 
-    case "loadPermission":
-        $dao->LoadPermission($obj);
+        case "loadSimple":
+            $dao->LoadSimpleAllMenu();
+            break;
 
-    case "loadPermissionSimple":
-        $dao->LoadSimplePermission($obj);
+        case "load":
+            $dao->LoadAllMenu();
+            break;
+
+        case "update":
+            $dao->Update($obj);
+            break;
+
+        case "loadAsignados":
+            $dao->LoadMenuAsignados($obj);
+            break;
+
+        case "loadPermission":
+            $dao->LoadPermission($obj);
+
+        case "loadPermissionSimple":
+            $dao->LoadSimplePermission($obj);
+    }
 }
-
 
 
 
