@@ -22,8 +22,8 @@ class Connection {
 
     public function connect() {
         $this->userbd = "root";
-        $this->passworddb = "admin";
-        $this->database = "macanaDB";        
+        $this->passworddb = "";
+        $this->database = "macanadb";        
         $this->host = "localhost";
         
 //        $this->userbd = "uq6w4n2azah4j";
