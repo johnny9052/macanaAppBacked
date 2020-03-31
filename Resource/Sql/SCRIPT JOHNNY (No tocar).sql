@@ -481,3 +481,57 @@ END//
 
 DELIMITER ;
 
+
+
+/********************DISPARADORES*********************************/
+
+
+drop trigger if exists before_vacas_update;
+
+delimiter //
+    create trigger before_vacas_update
+      before update
+      on vaca
+      for each row
+    begin
+      if(new.idrotacion<>old.idrotacion)
+        then
+            update rotacion set cantvacas = cantvacas + 1
+            where id = new.idrotacion;
+
+            update rotacion set cantvacas = cantvacas - 1
+            where id = old.idrotacion;
+      end if;
+    end //
+delimiter ;
+
+
+
+drop trigger if exists after_vacas_insert;
+
+ delimiter //
+    create trigger after_vacas_insert
+      after insert
+      on vaca
+      for each row
+    begin
+       update rotacion set cantvacas = cantvacas + 1
+       where id = new.idrotacion;
+    end //
+ delimiter ;
+
+
+
+
+ drop trigger if exists before_vacas_delete;  
+  
+ delimiter //
+ create trigger before_vacas_delete
+   before delete
+   on vaca
+   for each row
+ begin
+      update rotacion set cantvacas = cantvacas - 1
+      where id = old.idrotacion;
+ end //
+ delimiter ;
