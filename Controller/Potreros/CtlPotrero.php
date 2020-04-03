@@ -13,10 +13,11 @@ $numero = getInfo('numero');
 $area = getInfo('area');
 $observacion = getInfo('observacion');
 $idrotacion = getInfo('idrotacion');
+$estado = getInfo('estado');
 $idresponsable = getInfo('idresponsable');
 
 /*DEFINICION DE OBJETOS*/
-$obj = new PotreroDTO($id, $numero, $area, $observacion, $idrotacion, $idresponsable);
+$obj = new PotreroDTO($id, $numero, $area, $observacion, $idrotacion, $estado, $idresponsable);
 $dao = new PotreroDAO();
 
 /* CONTROL DE ACCIONES */
