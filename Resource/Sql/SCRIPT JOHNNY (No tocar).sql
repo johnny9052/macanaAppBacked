@@ -535,3 +535,134 @@ drop trigger if exists after_vacas_insert;
       where id = old.idrotacion;
  end //
  delimiter ;
+
+
+
+/****************************PLAN DE MANEJO***************************************************/
+
+delete from menu_rol where idmenu = 15;
+
+delete from menu where id = 15;
+
+insert into menu (nombre,codigo,padre,descripcion,prioridad,icono) values ('Plan de manejo fertilizacion','/plan-manejo-fertilizacion','-1','','17','trending-up');
+
+
+
+
+create table planmanejofertilizacion(
+    id int AUTO_INCREMENT,
+    periodicidad int,
+    fechainicio varchar(20),
+    fechafin varchar(20),
+    observaciones varchar(2000),
+    idresponsable int,
+    primary key(id)
+);
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listplanmanejofertilizacion(iduser int)
+    COMMENT 'Procedimiento que lista los planes de manejo fertilizacion'
+BEGIN
+   select id,periodicidad,fechainicio,fechafin,observaciones
+   from planmanejofertilizacion
+   order by id;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION saveplanmanejofertilizacion (vid int, 
+                          vperiodicidad varchar(50), 
+                          vfechainicio varchar(50), 
+                          vfechafin varchar(50), 
+                          vobservaciones varchar(50), 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena un plan de manejo fertilizacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from planmanejofertilizacion where fechainicio=vfechainicio and fechafin=vfechafin)
+		THEN
+			insert into planmanejofertilizacion(periodicidad,fechainicio,fechafin,observaciones,idresponsable)
+			VALUES (vperiodicidad,vfechainicio,vfechafin,vobservaciones,vidresponsable);
+			set res = 1;
+		END IF;
+
+RETURN res;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updateplanmanejofertilizacion (vid int, 
+                          vperiodicidad varchar(50), 
+                          vfechainicio varchar(50), 
+                          vfechafin varchar(50), 
+                          vobservaciones varchar(50), 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica un plan de manejo fertilizacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from planmanejofertilizacion where fechainicio=vfechainicio and fechafin=vfechafin and id<>vid)
+		THEN
+
+            UPDATE planmanejofertilizacion
+            SET  periodicidad=vperiodicidad, fechainicio=vfechainicio, 
+                    fechafin=vfechafin, observaciones=vobservaciones
+            WHERE id=vid;
+
+	set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE  FUNCTION deleteplanmanejofertilizacion(vid INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que elimina un plan de manejo fertilizacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    DELETE FROM planmanejofertilizacion WHERE id = vid;
+    SET res = 1;
+    RETURN res;
+
+END//
+
+DELIMITER ;
