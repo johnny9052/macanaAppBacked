@@ -722,7 +722,7 @@ CREATE FUNCTION saveplanmanejofertilizacionpotrero (
 BEGIN 
     DECLARE res INT DEFAULT 0;
     
-IF NOT EXISTS(select idplanmanejo from planmanejofertilizacionpotrero where idplanmanejo=idplanmanejo and idpotrero=vidpotrero)
+IF NOT EXISTS(select idplanmanejo from planmanejofertilizacionpotrero where idplanmanejo=vidplanmanejo and idpotrero=vidpotrero)
 		THEN
 			insert into planmanejofertilizacionpotrero(idplanmanejo,idpotrero,fecha,observaciones,ejecutado,idresponsable)
 			VALUES (vidplanmanejo,vidpotrero,vfecha,vobservaciones,vejecutado,vidresponsable);
@@ -807,6 +807,9 @@ DELIMITER ;
 
 /********************GESTION FERTILIZANTE*****************************/
 
+INSERT INTO `presentacion` (`id`, `nombre`, `observacion`) VALUES
+(1, 'Presentacion 1', NULL),
+(2, 'Presentacion 2', NULL);
 
 create table fertilizante(
     id int AUTO_INCREMENT,
@@ -817,6 +820,27 @@ create table fertilizante(
     primary key (id),
     foreign key (idpresentacion) references presentacion(id)
 );
+
+
+INSERT INTO `fertilizante` (`id`, `nombre`, `marca`, `idpresentacion`, `idresponsable`) VALUES
+(1, 'Fertilizante 1', 'Marca generica', 1, 1),
+(2, 'Fertilizante 2', 'Marca generica', 2, 1);
+
+
+
+DELIMITER //
+CREATE PROCEDURE listfertilizante(idfertilizante int)
+    COMMENT 'Procedimiento que lista los fertilizantes'
+BEGIN
+   select f.id,f.nombre,f.marca,f.idpresentacion,f.idresponsable, p.nombre
+   from fertilizante as f join presentacion as p 
+   on f.idpresentacion = p.id
+   order by f.nombre;
+END//
+
+DELIMITER ;
+
+
 
 
 create table planmanejofertilizacionfertilizante(
@@ -833,12 +857,13 @@ create table planmanejofertilizacionfertilizante(
 
 
 
+DROP PROCEDURE IF EXISTS listplanmanejofertilizacionfertilizante;
   
 DELIMITER //
 CREATE PROCEDURE listplanmanejofertilizacionfertilizante(idplanmanejofertilizacion int)
     COMMENT 'Procedimiento que lista los fertilizantes de un plan de manejo fertilizacion'
 BEGIN
-   select pm.id,pm.idplanmanejo,pm.idfertilizante,pm.cantidad,pm.idresponsable, f.numero
+   select pm.id,pm.idplanmanejo,pm.idfertilizante,pm.cantidad,pm.idresponsable, f.nombre
    from planmanejofertilizacionfertilizante as pm join fertilizante as f 
    on pm.idfertilizante = f.id 
    where pm.idplanmanejo = idplanmanejofertilizacion
@@ -866,7 +891,7 @@ CREATE FUNCTION saveplanmanejofertilizacionfertilizante (
 BEGIN 
     DECLARE res INT DEFAULT 0;
     
-IF NOT EXISTS(select idplanmanejo from planmanejofertilizacionfertilizante where idplanmanejo=idplanmanejo and idfertilizante=vidfertilizante)
+IF NOT EXISTS(select idplanmanejo from planmanejofertilizacionfertilizante where idplanmanejo=vidplanmanejo and idfertilizante=vidfertilizante)
 		THEN
 			insert into planmanejofertilizacionfertilizante(idplanmanejo,idfertilizante,cantidad,idresponsable)
 			VALUES (vidplanmanejo,vidfertilizante,vcantidad,vidresponsable);

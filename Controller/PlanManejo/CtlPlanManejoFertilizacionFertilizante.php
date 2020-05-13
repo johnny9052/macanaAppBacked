@@ -23,8 +23,8 @@ $security = new Security();
 
 if ($security->validarTokenUser($token)) {
     /* DEFINICION DE OBJETOS */
-    $obj = new PlanManejoFertilizacionFertilizacionDTO($id, $idplanfertilizacion, $idfertilizante, $cantidad, $idresponsable);
-    $dao = new PlanManejoFertilizacionFertilizacionDAO();
+    $obj = new PlanManejoFertilizacionFertilizanteDTO($id, $idplanfertilizacion, $idfertilizante, $cantidad, $idresponsable);
+    $dao = new PlanManejoFertilizacionFertilizanteDAO();
 
     /* CONTROL DE ACCIONES */
     ExecuteAction($action, $obj, $dao);

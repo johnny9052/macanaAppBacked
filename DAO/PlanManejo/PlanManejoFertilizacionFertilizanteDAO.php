@@ -25,9 +25,7 @@ class PlanManejoFertilizacionFertilizanteDAO {
         $query = $this->repository->buildQuerySimply("saveplanmanejofertilizacionfertilizante", array(
             (int) $obj->getIdplanfertilizacion(),
             (int) $obj->getIdfertilizacion(),
-            (string) $obj->getFecha(),
-            (string) $obj->getObservaciones(),
-            (int) $obj->getEjecutado(),
+            (int) $obj->getCantidad(),
             (int) $obj->getIdresponsable()
         ));
 
@@ -70,12 +68,10 @@ class PlanManejoFertilizacionFertilizanteDAO {
      */
     public function Update(PlanManejoFertilizacionFertilizanteDTO $obj) {
         $query = $this->repository->buildQuerySimply("updateplanmanejofertilizacionfertilizante", array(
-             (int) $obj->getId(),
+            (int) $obj->getId(),
             (int) $obj->getIdplanfertilizacion(),
             (int) $obj->getIdfertilizacion(),
-            (string) $obj->getFecha(),
-            (string) $obj->getObservaciones(),
-            (int) $obj->getEjecutado(),
+            (int) $obj->getCantidad(),
             (int) $obj->getIdresponsable()
         ));
         $this->repository->ExecuteTransaction($query);
