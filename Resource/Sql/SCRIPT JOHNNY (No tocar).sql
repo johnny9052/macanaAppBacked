@@ -538,6 +538,14 @@ drop trigger if exists after_vacas_insert;
 
 
 
+
+
+
+
+
+
+
+
 /****************************PLAN DE MANEJO***************************************************/
 
 delete from menu_rol where idmenu = 15;
@@ -828,11 +836,13 @@ INSERT INTO `fertilizante` (`id`, `nombre`, `marca`, `idpresentacion`, `idrespon
 
 
 
+DROP PROCEDURE IF EXISTS listfertilizante;
+
 DELIMITER //
 CREATE PROCEDURE listfertilizante(idfertilizante int)
     COMMENT 'Procedimiento que lista los fertilizantes'
 BEGIN
-   select f.id,f.nombre,f.marca,f.idpresentacion,f.idresponsable, p.nombre
+   select f.id,f.nombre,f.marca,f.idpresentacion,f.idresponsable, p.nombre as presentacion
    from fertilizante as f join presentacion as p 
    on f.idpresentacion = p.id
    order by f.nombre;
