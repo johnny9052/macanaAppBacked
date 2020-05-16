@@ -70,7 +70,7 @@ class PlanManejoFertilizacionPotreroDAO {
      */
     public function Update(PlanManejoFertilizacionPotreroDTO $obj) {
         $query = $this->repository->buildQuerySimply("updateplanmanejofertilizacionpotrero", array(
-             (int) $obj->getId(),
+            (int) $obj->getId(),
             (int) $obj->getIdplanfertilizacion(),
             (int) $obj->getIdpotrero(),
             (string) $obj->getFecha(),
@@ -90,6 +90,18 @@ class PlanManejoFertilizacionPotreroDAO {
      */
     public function Delete(PlanManejoFertilizacionPotreroDTO $obj) {
         $query = $this->repository->buildQuerySimply("deleteplanmanejofertilizacionpotrero", array((int) $obj->getId()));
+        $this->repository->ExecuteTransaction($query);
+    }
+
+    public function SavePotrerosPorRotaciones(PlanManejoFertilizacionPotreroConfiguracionDTO $obj) {
+        $query = $this->repository->buildQuerySimply("saveplanmanejofertilizacionpotreroporcaracteristica", array(
+            (int) $obj->getIdplanmanejo(),
+            (int) $obj->getIdrotacion(),
+            (string) $obj->getIdresponsable()
+        ));
+
+        //echo $query;
+
         $this->repository->ExecuteTransaction($query);
     }
 

@@ -977,3 +977,78 @@ END//
 
 DELIMITER ;
 
+
+
+/********************15 DE MAYO EN ADELANTE***********************************************/
+
+
+DROP FUNCTION IF EXISTS saveplanmanejofertilizacionpotreroporcaracteristica;
+
+DELIMITER //
+
+CREATE FUNCTION saveplanmanejofertilizacionpotreroporcaracteristica(
+                    vidplanmanejo int,
+                    vidrotacion int,
+                    vidresponsable int)RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Procedimiento que asigna a un plan de manejo todos los potreros de la finca 
+             o de una rotacion en especifico'
+BEGIN
+
+    DECLARE res INT DEFAULT 0;
+
+    --Se declara las variables que se manejaran en el cursor
+    DECLARE idpotrerotemp INT;
+
+    --Se declara el cursor con el select con cuyos datos se va a iterar
+    DECLARE asignacion_potreros_cursor CURSOR FOR
+        select id
+        from potrero
+        where case
+                when vidrotacion <> -1 then
+                    idrotacion = vidrotacion
+                else 
+                    id
+                end;
+
+    --Declaración de un manejador de error tipo NOT FOUND
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET @hecho = TRUE;
+
+    --Se abre el cursor. Al abrir el cursor este sitúa un puntero a la primera fila del resultado de la consulta
+    OPEN asignacion_potreros_cursor;
+
+    --Empieza el bucle de lectura
+    loopControl: LOOP
+        --Se guarda el resultado en la variable, hay una variable y un campo en el SELECT de la declaración del cursor
+        FETCH asignacion_potreros_cursor INTO idpotrerotemp;
+
+        --Se sale del bucle cuando no hay elementos por recorrer
+        IF @hecho THEN
+            LEAVE loopControl;
+        ELSE
+            --Si existen registros validamos si existe, y si no existe se registran
+            IF NOT EXISTS(select id from planmanejofertilizacionpotrero where idplanmanejo=vidplanmanejo and idpotrero=idpotrerotemp)
+		THEN
+                    insert into planmanejofertilizacionpotrero (idplanmanejo,idpotrero,fecha,observaciones,ejecutado,idresponsable)
+                    values (vidplanmanejo,idpotrerotemp,CURDATE(),'',0,vidresponsable);            								
+		END IF;
+        END IF;
+
+
+    END LOOP loopControl;
+
+    --Se cierra el cursor
+    CLOSE asignacion_potreros_cursor;
+
+    set res = 1;    
+    RETURN res;
+
+END//
+
+
+DELIMITER ;
+
+
+
+
