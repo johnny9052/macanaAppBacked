@@ -535,3 +535,763 @@ drop trigger if exists after_vacas_insert;
       where id = old.idrotacion;
  end //
  delimiter ;
+
+
+
+
+
+
+
+
+
+
+
+/****************************PLAN DE MANEJO***************************************************/
+
+delete from menu_rol where idmenu = 15;
+
+delete from menu where id = 15;
+
+insert into menu (nombre,codigo,padre,descripcion,prioridad,icono) values ('Plan de manejo fertilizacion','/plan-manejo-fertilizacion','-1','','17','trending-up');
+
+
+
+
+create table planmanejofertilizacion(
+    id int AUTO_INCREMENT,
+    periodicidad int,
+    fechainicio varchar(20),
+    fechafin varchar(20),
+    observaciones varchar(2000),
+    idresponsable int,
+    primary key(id)
+);
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listplanmanejofertilizacion(iduser int)
+    COMMENT 'Procedimiento que lista los planes de manejo fertilizacion'
+BEGIN
+   select id,periodicidad,fechainicio,fechafin,observaciones
+   from planmanejofertilizacion
+   order by id;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION saveplanmanejofertilizacion (vid int, 
+                          vperiodicidad varchar(50), 
+                          vfechainicio varchar(50), 
+                          vfechafin varchar(50), 
+                          vobservaciones varchar(50), 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena un plan de manejo fertilizacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from planmanejofertilizacion where fechainicio=vfechainicio and fechafin=vfechafin)
+		THEN
+			insert into planmanejofertilizacion(periodicidad,fechainicio,fechafin,observaciones,idresponsable)
+			VALUES (vperiodicidad,vfechainicio,vfechafin,vobservaciones,vidresponsable);
+			set res = 1;
+		END IF;
+
+RETURN res;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updateplanmanejofertilizacion (vid int, 
+                          vperiodicidad varchar(50), 
+                          vfechainicio varchar(50), 
+                          vfechafin varchar(50), 
+                          vobservaciones varchar(50), 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica un plan de manejo fertilizacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from planmanejofertilizacion where fechainicio=vfechainicio and fechafin=vfechafin and id<>vid)
+		THEN
+
+            UPDATE planmanejofertilizacion
+            SET  periodicidad=vperiodicidad, fechainicio=vfechainicio, 
+                    fechafin=vfechafin, observaciones=vobservaciones
+            WHERE id=vid;
+
+	set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE  FUNCTION deleteplanmanejofertilizacion(vid INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que elimina un plan de manejo fertilizacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    DELETE FROM planmanejofertilizacion WHERE id = vid;
+    SET res = 1;
+    RETURN res;
+
+END//
+
+DELIMITER ;
+
+
+
+/********************GESTION POTRERO*****************************/
+
+
+create table planmanejofertilizacionpotrero(
+    id int AUTO_INCREMENT,
+    idplanmanejo int,
+    idpotrero int,
+    fecha varchar(20),
+    observaciones varchar(2000),
+    ejecutado tinyint(1),
+    idresponsable int,
+    primary key (id),
+    foreign key (idplanManejo) references planmanejofertilizacion(id),
+    foreign key (idpotrero) references potrero(id)
+);
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listplanmanejofertilizacionpotrero(idplanmanejofertilizacion int)
+    COMMENT 'Procedimiento que lista los potreros de un plan de manejo fertilizacion'
+BEGIN
+   select pm.id, pm.idplanmanejo,pm.idpotrero,pm.fecha,pm.observaciones,pm.ejecutado, p.numero
+   from planmanejofertilizacionpotrero as pm join potrero as p 
+   on pm.idpotrero = p.id 
+   where pm.idplanmanejo = idplanmanejofertilizacion
+   order by idPotrero;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS saveplanmanejofertilizacionpotrero;
+
+DELIMITER //
+CREATE FUNCTION saveplanmanejofertilizacionpotrero (
+                          vidplanmanejo int, 
+                          vidpotrero int, 
+                          vfecha varchar(20), 
+                          vobservaciones varchar(2000), 
+                          vejecutado tinyint, 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena un plan de manejo fertilizacion potrero'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select idplanmanejo from planmanejofertilizacionpotrero where idplanmanejo=vidplanmanejo and idpotrero=vidpotrero)
+		THEN
+			insert into planmanejofertilizacionpotrero(idplanmanejo,idpotrero,fecha,observaciones,ejecutado,idresponsable)
+			VALUES (vidplanmanejo,vidpotrero,vfecha,vobservaciones,vejecutado,vidresponsable);
+			set res = 1;
+		END IF;
+
+RETURN res;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS updateplanmanejofertilizacionpotrero;
+
+
+DELIMITER //
+CREATE FUNCTION updateplanmanejofertilizacionpotrero (
+                          vid int,
+                          vidplanmanejo int, 
+                          vidpotrero int, 
+                          vfecha varchar(20), 
+                          vobservaciones varchar(2000), 
+                          vejecutado tinyint, 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica un plan de manejo fertilizacion potrero'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select idplanmanejo from planmanejofertilizacionpotrero where idplanmanejo=vidplanmanejo and idpotrero=vidpotrero and id <> vid)
+		THEN
+
+            UPDATE planmanejofertilizacionpotrero
+            SET  fecha=vfecha,observaciones=vobservaciones,ejecutado=vejecutado,idpotrero=vidpotrero
+            WHERE id=vid;
+
+	set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS deleteplanmanejofertilizacionpotrero;
+
+DELIMITER //
+CREATE  FUNCTION deleteplanmanejofertilizacionpotrero(vid INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que elimina un plan de manejo fertilizacion potrero'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    DELETE FROM planmanejofertilizacionpotrero 
+    WHERE id = vid;
+    SET res = 1;
+    RETURN res;
+
+END//
+
+DELIMITER ;
+
+
+
+
+/********************GESTION FERTILIZANTE*****************************/
+
+INSERT INTO `presentacion` (`id`, `nombre`, `observacion`) VALUES
+(1, 'Presentacion 1', NULL),
+(2, 'Presentacion 2', NULL);
+
+create table fertilizante(
+    id int AUTO_INCREMENT,
+    nombre varchar(50),
+    marca varchar(50),
+    idpresentacion int,
+    idresponsable int,
+    primary key (id),
+    foreign key (idpresentacion) references presentacion(id)
+);
+
+
+INSERT INTO `fertilizante` (`id`, `nombre`, `marca`, `idpresentacion`, `idresponsable`) VALUES
+(1, 'Fertilizante 1', 'Marca generica', 1, 1),
+(2, 'Fertilizante 2', 'Marca generica', 2, 1);
+
+
+
+DROP PROCEDURE IF EXISTS listfertilizante;
+
+DELIMITER //
+CREATE PROCEDURE listfertilizante(idfertilizante int)
+    COMMENT 'Procedimiento que lista los fertilizantes'
+BEGIN
+   select f.id,f.nombre,f.marca,f.idpresentacion,f.idresponsable, p.nombre as presentacion
+   from fertilizante as f join presentacion as p 
+   on f.idpresentacion = p.id
+   order by f.nombre;
+END//
+
+DELIMITER ;
+
+
+
+
+create table planmanejofertilizacionfertilizante(
+    id int AUTO_INCREMENT,
+    idplanmanejo int,
+    idfertilizante int,
+    cantidad int,
+    idresponsable int,
+    primary key (id),
+    foreign key (idplanManejo) references planmanejofertilizacion(id),
+    foreign key (idfertilizante) references fertilizante(id)
+);
+
+
+
+
+DROP PROCEDURE IF EXISTS listplanmanejofertilizacionfertilizante;
+  
+DELIMITER //
+CREATE PROCEDURE listplanmanejofertilizacionfertilizante(idplanmanejofertilizacion int)
+    COMMENT 'Procedimiento que lista los fertilizantes de un plan de manejo fertilizacion'
+BEGIN
+   select pm.id,pm.idplanmanejo,pm.idfertilizante,pm.cantidad,pm.idresponsable, f.nombre, p.nombre as presentacion
+   from planmanejofertilizacionfertilizante as pm 
+   join fertilizante as f  on pm.idfertilizante = f.id 
+   join presentacion as p on f.idpresentacion = p.id
+   where pm.idplanmanejo = idplanmanejofertilizacion
+   order by idfertilizante;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS saveplanmanejofertilizacionfertilizante;
+
+DELIMITER //
+CREATE FUNCTION saveplanmanejofertilizacionfertilizante (
+                          vidplanmanejo int, 
+                          vidfertilizante int, 
+                          vcantidad int,                           
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena un plan de manejo fertilizacion fertilizante'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select idplanmanejo from planmanejofertilizacionfertilizante where idplanmanejo=vidplanmanejo and idfertilizante=vidfertilizante)
+		THEN
+			insert into planmanejofertilizacionfertilizante(idplanmanejo,idfertilizante,cantidad,idresponsable)
+			VALUES (vidplanmanejo,vidfertilizante,vcantidad,vidresponsable);
+			set res = 1;
+		END IF;
+
+RETURN res;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS updateplanmanejofertilizacionfertilizante;
+
+
+DELIMITER //
+CREATE FUNCTION updateplanmanejofertilizacionfertilizante (
+                          vid int,
+                          vidplanmanejo int, 
+                          vidfertilizante int, 
+                          vcantidad int,                           
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica un plan de manejo fertilizacion fertilizante'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select idplanmanejo from planmanejofertilizacionfertilizante where idplanmanejo=vidplanmanejo and idfertilizante=vidfertilizante and id <> vid)
+		THEN
+
+            UPDATE planmanejofertilizacionfertilizante
+            SET  cantidad=vcantidad,idfertilizante=vidfertilizante 
+            WHERE id=vid;
+
+	set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+DROP FUNCTION IF EXISTS deleteplanmanejofertilizacionfertilizante;
+
+DELIMITER //
+CREATE  FUNCTION deleteplanmanejofertilizacionfertilizante(vid INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que elimina un plan de manejo fertilizacion fertilizante'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    DELETE FROM planmanejofertilizacionfertilizante 
+    WHERE id = vid;
+    SET res = 1;
+    RETURN res;
+
+END//
+
+DELIMITER ;
+
+
+
+/********************15 DE MAYO EN ADELANTE***********************************************/
+
+
+DROP FUNCTION IF EXISTS saveplanmanejofertilizacionpotreroporcaracteristica;
+
+DELIMITER //
+
+CREATE FUNCTION saveplanmanejofertilizacionpotreroporcaracteristica(
+                    vidplanmanejo int,
+                    vidrotacion int,
+                    vidresponsable int)RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Procedimiento que asigna a un plan de manejo todos los potreros de la finca 
+             o de una rotacion en especifico'
+BEGIN
+
+    DECLARE res INT DEFAULT 0;
+
+    --Se declara las variables que se manejaran en el cursor
+    DECLARE idpotrerotemp INT;
+
+    --Se declara el cursor con el select con cuyos datos se va a iterar
+    DECLARE asignacion_potreros_cursor CURSOR FOR
+        select id
+        from potrero
+        where case
+                when vidrotacion <> -1 then
+                    idrotacion = vidrotacion
+                else 
+                    id
+                end;
+
+    --Declaración de un manejador de error tipo NOT FOUND
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET @hecho = TRUE;
+
+    --Se abre el cursor. Al abrir el cursor este sitúa un puntero a la primera fila del resultado de la consulta
+    OPEN asignacion_potreros_cursor;
+
+    --Empieza el bucle de lectura
+    loopControl: LOOP
+        --Se guarda el resultado en la variable, hay una variable y un campo en el SELECT de la declaración del cursor
+        FETCH asignacion_potreros_cursor INTO idpotrerotemp;
+
+        --Se sale del bucle cuando no hay elementos por recorrer
+        IF @hecho THEN
+            LEAVE loopControl;
+        ELSE
+            --Si existen registros validamos si existe, y si no existe se registran
+            IF NOT EXISTS(select id from planmanejofertilizacionpotrero where idplanmanejo=vidplanmanejo and idpotrero=idpotrerotemp)
+		THEN
+                    insert into planmanejofertilizacionpotrero (idplanmanejo,idpotrero,fecha,observaciones,ejecutado,idresponsable)
+                    values (vidplanmanejo,idpotrerotemp,CURDATE(),'',0,vidresponsable);            								
+		END IF;
+        END IF;
+
+
+    END LOOP loopControl;
+
+    --Se cierra el cursor
+    CLOSE asignacion_potreros_cursor;
+
+    set res = 1;    
+    RETURN res;
+
+END//
+
+
+DELIMITER ;
+
+
+
+/******************************4 DE JUNIO EN ADELANTE***************************************************************/
+
+
+ALTER TABLE planmanejofertilizacion ADD nombre VARCHAR(200) NOT NULL AFTER id;
+
+
+
+DROP PROCEDURE IF EXISTS listplanmanejofertilizacion;
+
+DELIMITER //
+CREATE PROCEDURE listplanmanejofertilizacion(iduser int)
+    COMMENT 'Procedimiento que lista los planes de manejo fertilizacion'
+BEGIN
+   select id,nombre,fechainicio,observaciones
+   from planmanejofertilizacion
+   order by id;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+ALTER TABLE planmanejofertilizacion DROP periodicidad;
+
+ALTER TABLE planmanejofertilizacion DROP fechafin;
+
+
+
+
+DROP FUNCTION IF EXISTS saveplanmanejofertilizacion;
+
+DELIMITER //
+CREATE FUNCTION saveplanmanejofertilizacion (vid int,
+                          vnombre varchar(200),
+                          vfechainicio varchar(50), 
+                          vobservaciones varchar(50), 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena un plan de manejo fertilizacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from planmanejofertilizacion where fechainicio=vfechainicio)
+		THEN
+			insert into planmanejofertilizacion(nombre,fechainicio,observaciones,idresponsable)
+			VALUES (vnombre,vfechainicio,vobservaciones,vidresponsable);
+			set res = 1;
+		END IF;
+
+RETURN res;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS updateplanmanejofertilizacion;
+
+DELIMITER //
+CREATE FUNCTION updateplanmanejofertilizacion (vid int, 
+                          vnombre varchar(200),
+                          vfechainicio varchar(50), 
+                          vobservaciones varchar(50), 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica un plan de manejo fertilizacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from planmanejofertilizacion where fechainicio=vfechainicio and id<>vid)
+		THEN
+
+            UPDATE planmanejofertilizacion
+            SET  nombre=vnombre, fechainicio=vfechainicio, 
+                   observaciones=vobservaciones
+            WHERE id=vid;
+
+	set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS saveplanmanejofertilizacionpotrero;
+
+DELIMITER //
+CREATE FUNCTION saveplanmanejofertilizacionpotrero (
+                          vidplanmanejo int, 
+                          vidpotrero int,                         
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena un plan de manejo fertilizacion potrero'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select idplanmanejo from planmanejofertilizacionpotrero where idplanmanejo=vidplanmanejo and idpotrero=vidpotrero)
+		THEN
+			insert into planmanejofertilizacionpotrero(idplanmanejo,idpotrero,ejecutado,idresponsable)
+			VALUES (vidplanmanejo,vidpotrero,0,vidresponsable);
+			set res = 1;
+		END IF;
+
+RETURN res;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS updateplanmanejofertilizacionpotrero;
+
+
+DELIMITER //
+CREATE FUNCTION updateplanmanejofertilizacionpotrero (
+                          vid int,
+                          vidplanmanejo int, 
+                          vidpotrero int,                          
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica un plan de manejo fertilizacion potrero'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select idplanmanejo from planmanejofertilizacionpotrero where idplanmanejo=vidplanmanejo and idpotrero=vidpotrero and id <> vid)
+		THEN
+
+            UPDATE planmanejofertilizacionpotrero
+            SET  idpotrero=vidpotrero
+            WHERE id=vid;
+
+	set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+insert into menu(nombre,codigo,padre,descripcion,prioridad,icono)
+values('Plan fertilizacion operario','/plan-manejo-fertilizacion-operario',-1,'',18,'trending-up');
+
+
+
+
+
+
+DROP PROCEDURE IF EXISTS listplanmanejofertilizacionpotreroByPlanManejo;
+
+DELIMITER //
+CREATE PROCEDURE listplanmanejofertilizacionpotreroByPlanManejo(idplanmanejofertilizacion int)
+    COMMENT 'Procedimiento que lista los potreros de un plan de manejo fertilizacion para el operario'
+BEGIN
+   select pm.idpotrero as id ,pm.idplanmanejo,pm.fecha,pm.observaciones,pm.ejecutado, p.numero, p.area as area
+   from planmanejofertilizacionpotrero as pm join potrero as p 
+   on pm.idpotrero = p.id 
+   where pm.idplanmanejo = idplanmanejofertilizacion and p.estado = 0 and pm.ejecutado = 0
+   order by idPotrero;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS updateplanmanejofertilizacionpotreroByOperario;
+
+
+DELIMITER //
+CREATE FUNCTION updateplanmanejofertilizacionpotreroByOperario (
+                          vidplanmanejo int, 
+                          vidpotrero int, 
+                          vfecha varchar(20), 
+                          vobservaciones varchar(2000), 
+                          vejecutado tinyint, 
+                          vidresponsable int) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica un plan de manejo fertilizacion potrero'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+    IF EXISTS(select idplanmanejo from planmanejofertilizacionpotrero where idplanmanejo=vidplanmanejo and idpotrero=vidpotrero)
+            THEN
+                UPDATE planmanejofertilizacionpotrero
+                SET  fecha=vfecha,observaciones=vobservaciones,ejecutado=vejecutado,idresponsable = vidresponsable
+                WHERE idplanmanejo=vidplanmanejo and idpotrero=vidpotrero;
+
+                set res=1;							
+    END IF;
+
+RETURN res;
+	
+
+END//
+
+DELIMITER ;

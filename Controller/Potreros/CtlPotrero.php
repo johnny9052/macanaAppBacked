@@ -13,6 +13,7 @@ $numero = getInfo('numero');
 $area = getInfo('area');
 $observacion = getInfo('observacion');
 $idrotacion = getInfo('idrotacion');
+$estado = getInfo('estado');
 $idresponsable = getInfo('idresponsable');
 $ordenrotacion = getInfo('ordenrotacion');
 

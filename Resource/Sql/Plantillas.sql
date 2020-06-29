@@ -1,11 +1,11 @@
 /*********************CREAR TABLA******************************/
 
 create table estadoclimatologico(
-    id AUTO_INCREMENT,
+    id int AUTO_INCREMENT,
     fecha varchar(20),
     nubosidad varchar(20),
     pluviometria int,
-    observaciones nvarchar(2000),
+    observaciones varchar(2000),
     idresponsable int,
     primary key(id)
 );

@@ -28,8 +28,11 @@ $rol = getInfo('rolId');
 $description = getInfo('descripcion');
 
 
+/*Codificacion a base64*/
 $foto = getInfo('foto');
+/*Se indica si se modifico foto*/
 $seActualizoFoto = getInfo('seActualizoFoto');
+/*Ruta de la imagen previa por si se edito, o de la ruta actual para eliminar*/
 $fotoCopiaRutaOriginal = getInfo('fotoCopiaRutaOriginal');
 
 
@@ -39,6 +42,7 @@ $token = getInfo('token');
 $security = new Security();
 
 if ($security->validarTokenUser($token)) {
+    /*Si voy a guardar y me mandaron una imagen*/
     if ($action === 'save' && $foto != null && $foto != "") {
         /* Se crean las imagenes que se tengan que crear */
         $fotoGenerada = generateFiles('', '../../', '', 'Resource/Images/Users/', 1, $user, '.jpg', false);

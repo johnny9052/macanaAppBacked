@@ -9,6 +9,7 @@ class PotreroDTO extends BaseDTO {
     private $area;
     private $observacion;
     private $idrotacion;
+    private $estado;
     private $idresponsable;
     private $ordenrotacion;
     
@@ -18,9 +19,12 @@ class PotreroDTO extends BaseDTO {
         $this->area = $area;
         $this->observacion = $observacion;
         $this->idrotacion = $idrotacion;
+        $this->estado = $estado;
         $this->idresponsable = $idresponsable;
         $this->ordenrotacion = $ordenrotacion;
     }
+    
+    
     
     function getId() {
         return $this->id;
@@ -40,6 +44,10 @@ class PotreroDTO extends BaseDTO {
 
     function getIdrotacion() {
         return $this->idrotacion;
+    }
+
+    function getEstado() {
+        return $this->estado;
     }
 
     function getIdresponsable() {
@@ -68,6 +76,10 @@ class PotreroDTO extends BaseDTO {
 
     function setIdrotacion($idrotacion) {
         $this->idrotacion = $idrotacion;
+    }
+
+    function setEstado($estado) {
+        $this->estado = $estado;
     }
 
     function setIdresponsable($idresponsable) {

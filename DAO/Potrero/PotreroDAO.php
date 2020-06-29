@@ -23,13 +23,13 @@ class PotreroDAO {
      */
     public function Save(PotreroDTO $obj) {
         $query = $this->repository->buildQuerySimply("savepotrero", array((int) $obj->getId(),
-            (int) $obj->getnumero(), 
+            (int) $obj->getnumero(),
             (float) $obj->getarea(),
             (string) $obj->getobservacion(),
             (int) $obj->getidrotacion(),
-            (int) $obj->getidresponsable(),
-            (int) $obj->getordenrotacion()
-                ));
+            (int) $obj->getEstado(),
+            (int) $obj->getidresponsable()
+        ));
         $this->repository->ExecuteTransaction($query);
     }
 
@@ -66,14 +66,14 @@ class PotreroDAO {
      * @version 0.1
      */
     public function Update(PotreroDTO $obj) {
-         $query = $this->repository->buildQuerySimply("updatepotrero", array((int) $obj->getId(),
-            (int) $obj->getnumero(), 
+        $query = $this->repository->buildQuerySimply("updatepotrero", array((int) $obj->getId(),
+            (int) $obj->getnumero(),
             (float) $obj->getarea(),
             (string) $obj->getobservacion(),
             (int) $obj->getidrotacion(),
-            (int) $obj->getidresponsable(),
-            (int) $obj->getordenrotacion()
-                ));
+            (int) $obj->getEstado(),
+            (int) $obj->getidresponsable()
+        ));
         $this->repository->ExecuteTransaction($query);
     }
 
