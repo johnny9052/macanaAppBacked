@@ -37,10 +37,19 @@ if ($security->validarTokenUser($token)) {
 
     /* DEFINICION DE OBJETOS CONFIGURACIONA */
     $conf = new PlanManejoFertilizacionPotreroConfiguracionDTO($idplanmanejo, $idrotacion, $idresponsable);
-
+    
     switch ($action) {
+
+        case "potreroEjecutadoPorOperario":
+            $dao->SavePotreroOperario($obj);
+            break;
+
         case "asociarpotrerosrotaciones":
             $dao->SavePotrerosPorRotaciones($conf);
+            break;
+        
+        case "listPotrerosByPlanesManejo":
+            $dao->ListPotrerosByPlanesManejo($obj);
             break;
 
         default :

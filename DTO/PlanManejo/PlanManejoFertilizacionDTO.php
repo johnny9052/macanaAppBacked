@@ -5,35 +5,31 @@ require_once ('../../DTO/BaseDTO.php');
 class PlanManejoFertilizacionDTO extends BaseDTO {
 
     private $id;
-    private $periodicidad;
+    private $nombre;
     private $fechainicio;
-    private $fechafin;
     private $descripcion;
     private $idresponsable;
 
-    function __construct($id, $periodicidad, $fechainicio, $fechafin, $descripcion, $idresponsable) {
+    
+    function __construct($id, $nombre, $fechainicio, $descripcion, $idresponsable) {
         $this->id = $id;
-        $this->periodicidad = $periodicidad;
+        $this->nombre = $nombre;
         $this->fechainicio = $fechainicio;
-        $this->fechafin = $fechafin;
         $this->descripcion = $descripcion;
         $this->idresponsable = $idresponsable;
     }
-
+    
+    
     function getId() {
         return $this->id;
     }
 
-    function getPeriodicidad() {
-        return $this->periodicidad;
+    function getNombre() {
+        return $this->nombre;
     }
 
     function getFechainicio() {
         return $this->fechainicio;
-    }
-
-    function getFechafin() {
-        return $this->fechafin;
     }
 
     function getDescripcion() {
@@ -48,16 +44,12 @@ class PlanManejoFertilizacionDTO extends BaseDTO {
         $this->id = $id;
     }
 
-    function setPeriodicidad($periodicidad) {
-        $this->periodicidad = $periodicidad;
+    function setNombre($nombre) {
+        $this->nombre = $nombre;
     }
 
     function setFechainicio($fechainicio) {
         $this->fechainicio = $fechainicio;
-    }
-
-    function setFechafin($fechafin) {
-        $this->fechafin = $fechafin;
     }
 
     function setDescripcion($descripcion) {
@@ -68,4 +60,7 @@ class PlanManejoFertilizacionDTO extends BaseDTO {
         $this->idresponsable = $idresponsable;
     }
 
+
+
+  
 }

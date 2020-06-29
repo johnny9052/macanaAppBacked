@@ -25,9 +25,6 @@ class PlanManejoFertilizacionPotreroDAO {
         $query = $this->repository->buildQuerySimply("saveplanmanejofertilizacionpotrero", array(
             (int) $obj->getIdplanfertilizacion(),
             (int) $obj->getIdpotrero(),
-            (string) $obj->getFecha(),
-            (string) $obj->getObservaciones(),
-            (int) $obj->getEjecutado(),
             (int) $obj->getIdresponsable()
         ));
 
@@ -73,9 +70,6 @@ class PlanManejoFertilizacionPotreroDAO {
             (int) $obj->getId(),
             (int) $obj->getIdplanfertilizacion(),
             (int) $obj->getIdpotrero(),
-            (string) $obj->getFecha(),
-            (string) $obj->getObservaciones(),
-            (int) $obj->getEjecutado(),
             (int) $obj->getIdresponsable()
         ));
         $this->repository->ExecuteTransaction($query);
@@ -103,6 +97,33 @@ class PlanManejoFertilizacionPotreroDAO {
         //echo $query;
 
         $this->repository->ExecuteTransaction($query);
+    }
+
+    /**
+     * Ejecuta un guardar en la base de datos
+     * @param PlanManejoFertilizacionPotreroDTO $obj 
+     * @return void      
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function SavePotreroOperario(PlanManejoFertilizacionPotreroDTO $obj) {
+        $query = $this->repository->buildQuerySimply("updateplanmanejofertilizacionpotreroByOperario", array(            
+            (int) $obj->getIdplanfertilizacion(),
+            (int) $obj->getIdpotrero(),
+            (string) $obj->getFecha(),
+            (string) $obj->getObservaciones(),
+            (int) $obj->getEjecutado(),
+            (int) $obj->getIdresponsable()
+        ));
+        
+       // echo $query;
+       $this->repository->ExecuteTransaction($query);
+    }
+
+    
+    public function ListPotrerosByPlanesManejo(PlanManejoFertilizacionPotreroDTO $obj) {
+        $query = $this->repository->buildQuery("listplanmanejofertilizacionpotreroByPlanManejo", array((int) $obj->getIdplanfertilizacion()));
+        $this->repository->Execute($query);
     }
 
 }

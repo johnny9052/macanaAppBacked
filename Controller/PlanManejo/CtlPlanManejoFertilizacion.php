@@ -11,9 +11,8 @@ require '../../Infraestructure/Security.php';
 /* RECEPCION DE DATOS */
 $action = getInfo('action');
 $id = getInfo('id');
-$periodicidad = getInfo('periodicidad');
+$nombre = getInfo('nombre');
 $fechainicio = getInfo('fechainicio');
-$fechafin = getInfo('fechafin');
 $descripcion = getInfo('observaciones');
 $idresponsable = getInfo('idresponsable');
 
@@ -24,7 +23,7 @@ $security = new Security();
 
 if ($security->validarTokenUser($token)) {
     /* DEFINICION DE OBJETOS */
-    $obj = new PlanManejoFertilizacionDTO($id, $periodicidad, $fechainicio, $fechafin, $descripcion, $idresponsable);
+    $obj = new PlanManejoFertilizacionDTO($id, $nombre, $fechainicio, $descripcion, $idresponsable);
     $dao = new PlanManejoFertilizacionDAO();
 
     /* CONTROL DE ACCIONES */
