@@ -22,9 +22,10 @@ class Connection {
 
     public function connect() {
         $this->userbd = "root";
-        $this->passworddb = "admin";
+        $this->passworddb = "";
         $this->database = "macanadb";        
         $this->host = "localhost";
+       
         
 //        $this->userbd = "uq6w4n2azah4j";
 //        $this->passworddb = "bb[313%>g1c1";

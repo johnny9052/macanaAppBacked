@@ -89,6 +89,4 @@ class Internationalization {
     function setTitleEmailSystemPedido($titleEmailSystemPedido) {
         $this->titleEmailSystemPedido = $titleEmailSystemPedido;
     }
-
-
 }

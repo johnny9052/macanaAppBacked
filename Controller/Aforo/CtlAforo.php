@@ -31,6 +31,8 @@ $cantpastopotrero = getInfo('cantpastopotrero');
 $tiempopotrero = getInfo('tiempopotrero');
 $observaciones = getInfo('observaciones');
 $idresponsable = getInfo('idresponsable');
+$fechaentrada = getInfo('fechaentrada');
+$fechasalida = getInfo('fechasalida');
 
 
 /* DATOS NECESARIOS PARA EL REPORTE */
@@ -41,7 +43,11 @@ $caracter = getInfo('caracter');
 /* END DATOS NECESARIOS PARA EL REPORTE */
 
 /* DEFINICION DE OBJETOS */
-$obj = new AforoDTO($id, $fecha, $idpotrero, $pastoalto, $pastobajo, $pastomedio, $lancealto, $lancemedio, $lancebajo, $cantlances, $pesopastoalto, $pesopastobajo, $pesopastomedio, $cantpasto, $porcentajealtro, $porcentajemedio, $porcentajebajo, $totalmetrocuadrado, $cantpastopotrero, $tiempopotrero, $observaciones, $idresponsable, $caracter);
+$obj = new AforoDTO($id, $fecha, $idpotrero, $pastoalto, $pastobajo, $pastomedio, $lancealto, 
+                    $lancemedio, $lancebajo, $cantlances, $pesopastoalto, $pesopastobajo, 
+                    $pesopastomedio, $cantpasto, $porcentajealtro, $porcentajemedio, $porcentajebajo, 
+                    $totalmetrocuadrado, $cantpastopotrero, $tiempopotrero, $observaciones, 
+                    $idresponsable,$fechaentrada, $fechasalida,$caracter);
 $dao = new AforoDAO();
 
 /* CONTROL DE ACCIONES */

@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.0.4
 -- http://www.phpmyadmin.net
 --
@@ -19,8 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `dbdxbar7e6xcvq`
 --
-CREATE DATABASE IF NOT EXISTS `dbdxbar7e6xcvq` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `dbdxbar7e6xcvq`;
+CREATE DATABASE IF NOT EXISTS `macanadb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `macanadb`;
 
 DELIMITER $$
 --

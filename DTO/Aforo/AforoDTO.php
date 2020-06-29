@@ -26,11 +26,11 @@ class AforoDTO extends BaseDTO {
     private $tiempopotrero;
     private $observaciones;
     private $idresponsable;
-    
+    private $fechaentrada;
+    private $fechasalida;
     private $caracter;
-
-  
-    function __construct($id, $fecha, $idpotrero, $pastoalto, $pastobajo, $pastomedio, $lancealto, $lancemedio, $lancebajo, $cantlances, $pesopastoalto, $pesopastobajo, $pesopastomedio, $cantpasto, $porcentajealtro, $porcentajemedio, $porcentajebajo, $totalmetrocuadrado, $cantpastopotrero, $tiempopotrero, $observaciones, $idresponsable, $caracter) {
+    
+    function __construct($id, $fecha, $idpotrero, $pastoalto, $pastobajo, $pastomedio, $lancealto, $lancemedio, $lancebajo, $cantlances, $pesopastoalto, $pesopastobajo, $pesopastomedio, $cantpasto, $porcentajealtro, $porcentajemedio, $porcentajebajo, $totalmetrocuadrado, $cantpastopotrero, $tiempopotrero, $observaciones, $idresponsable, $fechaentrada, $fechasalida, $caracter) {
         $this->id = $id;
         $this->fecha = $fecha;
         $this->idpotrero = $idpotrero;
@@ -53,10 +53,11 @@ class AforoDTO extends BaseDTO {
         $this->tiempopotrero = $tiempopotrero;
         $this->observaciones = $observaciones;
         $this->idresponsable = $idresponsable;
+        $this->fechaentrada = $fechaentrada;
+        $this->fechasalida = $fechasalida;
         $this->caracter = $caracter;
     }
-    
-    
+
     function getId() {
         return $this->id;
     }
@@ -143,6 +144,14 @@ class AforoDTO extends BaseDTO {
 
     function getIdresponsable() {
         return $this->idresponsable;
+    }
+
+    function getFechaentrada() {
+        return $this->fechaentrada;
+    }
+
+    function getFechasalida() {
+        return $this->fechasalida;
     }
 
     function getCaracter() {
@@ -237,11 +246,16 @@ class AforoDTO extends BaseDTO {
         $this->idresponsable = $idresponsable;
     }
 
+    function setFechaentrada($fechaentrada) {
+        $this->fechaentrada = $fechaentrada;
+    }
+
+    function setFechasalida($fechasalida) {
+        $this->fechasalida = $fechasalida;
+    }
+
     function setCaracter($caracter) {
         $this->caracter = $caracter;
     }
-
-
-
-
+  
 }

@@ -27,7 +27,8 @@ class PotreroDAO {
             (float) $obj->getarea(),
             (string) $obj->getobservacion(),
             (int) $obj->getidrotacion(),
-            (int) $obj->getidresponsable()
+            (int) $obj->getidresponsable(),
+            (int) $obj->getordenrotacion()
                 ));
         $this->repository->ExecuteTransaction($query);
     }
@@ -70,7 +71,8 @@ class PotreroDAO {
             (float) $obj->getarea(),
             (string) $obj->getobservacion(),
             (int) $obj->getidrotacion(),
-            (int) $obj->getidresponsable()
+            (int) $obj->getidresponsable(),
+            (int) $obj->getordenrotacion()
                 ));
         $this->repository->ExecuteTransaction($query);
     }

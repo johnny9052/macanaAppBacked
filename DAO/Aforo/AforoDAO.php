@@ -34,8 +34,10 @@ class AforoDAO {
             (float) $obj->getPorcentajemedio(), (float) $obj->getPorcentajebajo(),
             (float) $obj->getTotalmetrocuadrado(), (float) $obj->getCantpastopotrero(),
             (float) $obj->getTiempopotrero(), (string) $obj->getObservaciones(),
-            (int) $obj->getIdresponsable()
+            (int) $obj->getIdresponsable(), (string) $obj->getFechaentrada(),
+            (string) $obj->getFechasalida()
         ));
+        //echo $query;
         $this->repository->ExecuteTransaction($query);
     }
 
@@ -50,6 +52,7 @@ class AforoDAO {
     public function ListAll(AforoDTO $obj, $type) {
         $query = $this->repository->buildQuery("listaforo", array((int) $obj->getIdUser()));
         $this->repository->Execute($query);
+        
     }
 
     /**
@@ -84,8 +87,10 @@ class AforoDAO {
             (float) $obj->getPorcentajemedio(), (float) $obj->getPorcentajebajo(),
             (float) $obj->getTotalmetrocuadrado(), (float) $obj->getCantpastopotrero(),
             (float) $obj->getTiempopotrero(), (string) $obj->getObservaciones(),
-            (int) $obj->getIdresponsable()
+            (int) $obj->getIdresponsable(),(string) $obj->getFechaentrada(),
+            (string) $obj->getFechasalida()
         ));
+        //echo $query;
         $this->repository->ExecuteTransaction($query);
     }
 
