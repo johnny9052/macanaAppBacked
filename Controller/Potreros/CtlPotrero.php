@@ -18,7 +18,7 @@ $idresponsable = getInfo('idresponsable');
 $ordenrotacion = getInfo('ordenrotacion');
 
 /*DEFINICION DE OBJETOS*/
-$obj = new PotreroDTO($id, $numero, $area, $observacion, $idrotacion, $idresponsable,$ordenrotacion);
+$obj = new PotreroDTO($id, $numero, $area, $observacion, $idrotacion,$ordenrotacion, $estado,  $idresponsable);
 $dao = new PotreroDAO();
 
 /* CONTROL DE ACCIONES */

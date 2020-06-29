@@ -13,7 +13,7 @@ class PotreroDTO extends BaseDTO {
     private $idresponsable;
     private $ordenrotacion;
     
-    function __construct($id, $numero, $area, $observacion, $idrotacion, $idresponsable, $ordenrotacion) {
+    function __construct($id, $numero, $area, $observacion, $idrotacion, $ordenrotacion, $estado, $idresponsable) {
         $this->id = $id;
         $this->numero = $numero;
         $this->area = $area;

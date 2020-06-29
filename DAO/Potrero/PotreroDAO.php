@@ -26,9 +26,10 @@ class PotreroDAO {
             (int) $obj->getnumero(),
             (float) $obj->getarea(),
             (string) $obj->getobservacion(),
-            (int) $obj->getidrotacion(),
-            (int) $obj->getEstado(),
-            (int) $obj->getidresponsable()
+            (int) $obj->getidrotacion(),            
+            (int) $obj->getidresponsable(), 
+            (int) $obj->getOrdenrotacion(),
+            (int) $obj->getEstado()
         ));
         $this->repository->ExecuteTransaction($query);
     }
@@ -70,9 +71,10 @@ class PotreroDAO {
             (int) $obj->getnumero(),
             (float) $obj->getarea(),
             (string) $obj->getobservacion(),
-            (int) $obj->getidrotacion(),
-            (int) $obj->getEstado(),
-            (int) $obj->getidresponsable()
+            (int) $obj->getidrotacion(),            
+            (int) $obj->getidresponsable(),
+            (int) $obj->getOrdenrotacion(),
+            (int) $obj->getEstado()
         ));
         $this->repository->ExecuteTransaction($query);
     }
