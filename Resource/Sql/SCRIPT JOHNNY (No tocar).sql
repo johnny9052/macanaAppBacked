@@ -1295,3 +1295,297 @@ RETURN res;
 END//
 
 DELIMITER ;
+
+
+
+/*************************************************************************************************************
+/*************************************************************************************************************
+/*************************************************************************************************************
+/*************************************************************************************************************
+/*************************************************************************************************************
+/*************************************************************************************************************
+/********************************INICIO DE PLAN MANEJO FUMIGACION*********************************************
+/*************************************************************************************************************
+/*************************************************************************************************************
+/*************************************************************************************************************
+/*************************************************************************************************************
+/*************************************************************************************************************/
+
+DROP FUNCTION IF EXISTS saveplanmanejofertilizacion;
+
+DELIMITER $$
+CREATE FUNCTION `saveplanmanejofertilizacion`(`vid` INT, `vnombre` VARCHAR(200), `vfechainicio` VARCHAR(50), `vobservaciones` VARCHAR(50), `vidresponsable` INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena un plan de manejo fertilizacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from planmanejofertilizacion where nombre = vnombre and fechainicio = vfechainicio)
+		THEN
+			insert into planmanejofertilizacion(nombre,fechainicio,observaciones,idresponsable)
+			VALUES (vnombre,vfechainicio,vobservaciones,vidresponsable);
+			set res = 1;
+		END IF;
+
+RETURN res;
+	
+END$$
+DELIMITER ;
+
+
+
+
+DROP TABLE IF EXISTS insumo_fumigacion;
+
+CREATE TABLE insumo_fumigacion (
+  id int(11) AUTO_INCREMENT,
+  nombre varchar(50) DEFAULT NULL,
+  marca varchar(50) DEFAULT NULL,
+  idpresentacion int(11) DEFAULT NULL,
+  idresponsable int(11) DEFAULT NULL,
+  FOREIGN KEY (idpresentacion) REFERENCES presentacion (id),
+  primary key(id)
+)
+
+
+
+DROP PROCEDURE IF EXISTS listinsumofumigacion;
+
+DELIMITER $$
+CREATE PROCEDURE listinsumofumigacion(`idinsumofumigacion` INT)
+BEGIN
+   select f.id,f.nombre,f.marca,f.idpresentacion,f.idresponsable, p.nombre as presentacion
+   from insumo_fumigacion as f join presentacion as p 
+   on f.idpresentacion = p.id
+   order by f.nombre;
+END$$
+DELIMITER ;
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS saveinsumofumigacion;
+
+DELIMITER $$
+CREATE FUNCTION `saveinsumofumigacion`(`vid` INT, `vnombre` VARCHAR(50), `vmarca` VARCHAR(50), `vidpresentacion` INT(11), `vidresponsable` INT(11)) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena un insumofumigacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from insumo_fumigacion where id=vid)
+		THEN
+			insert into insumo_fumigacion(nombre, marca, idpresentacion, idresponsable)
+			VALUES (vnombre,vmarca,vidpresentacion,vidresponsable);
+			set res = 1;
+			
+		END IF;
+
+RETURN res;
+	
+END$$
+DELIMITER ;
+
+
+
+
+
+DROP FUNCTION IF EXISTS updateinsumofumigacion;
+
+DELIMITER $$
+CREATE FUNCTION `updateinsumofumigacion`(`vid` INT, `vnombre` VARCHAR(50), `vmarca` VARCHAR(50), `vidpresentacion` INT(11), `vidresponsable` INT(11)) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica un insumofumigacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from insumo_fumigacion where nombre=vnombre AND id<>vid)
+		THEN
+
+            UPDATE insumo_fumigacion
+            SET  nombre=vnombre, marca = vmarca, idpresentacion = vidpresentacion, idresponsable = vidresponsable
+            WHERE id=vid;
+
+	set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END$$
+DELIMITER ;
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS deleteinsumofumigacion;
+
+DELIMITER $$
+CREATE FUNCTION `deleteinsumofumigacion`(`vid` INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que elimina un insumo_fumigacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    DELETE FROM insumo_fumigacion WHERE id = vid;
+    SET res = 1;
+    RETURN res;
+
+END$$
+DELIMITER ;
+
+
+
+
+insert into menu (nombre,codigo,padre,descripcion,prioridad,icono) values ('Insumos fumigacion','/insumo-fumigacion','-1','','17','bug');
+
+
+
+
+
+
+CREATE TABLE `planmanejofumigacion` (
+  `id` int(11) AUTO_INCREMENT,
+  `nombre` varchar(200) NOT NULL,
+  `fechainicio` varchar(20) DEFAULT NULL,
+  `observaciones` varchar(2000) DEFAULT NULL,
+  `idresponsable` int(11) DEFAULT NULL,
+  primary key(id)
+);
+
+
+
+
+CREATE TABLE `planmanejofertilizacioninsumo` (
+  `id` int(11) AUTO_INCREMENT,
+  `idplanmanejo` int(11) DEFAULT NULL,
+  `idinsumofumigacion` int(11) DEFAULT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `idresponsable` int(11) DEFAULT NULL,
+  primary key(id),
+  FOREIGN KEY (`idplanmanejo`) REFERENCES `planmanejofumigacion` (`id`),
+  FOREIGN KEY (`idinsumofumigacion`) REFERENCES `insumo_fumigacion` (`id`)
+
+);
+
+
+
+
+
+CREATE TABLE `planmanejofumigacionpotrero` (
+  `id` int(11) AUTO_INCREMENT,
+  `idplanmanejo` int(11) DEFAULT NULL,
+  `idpotrero` int(11) DEFAULT NULL,
+  `fecha` varchar(20) DEFAULT NULL,
+  `observaciones` varchar(2000) DEFAULT NULL,
+  `ejecutado` tinyint(1) DEFAULT NULL,
+  `idresponsable` int(11) DEFAULT NULL,
+  primary key(id),
+FOREIGN KEY (`idplanmanejo`) REFERENCES `planmanejofumigacion` (`id`),
+FOREIGN KEY (`idpotrero`) REFERENCES `potrero` (`id`)
+)
+
+
+
+
+
+DELIMITER $$
+CREATE  PROCEDURE `listplanmanejofumigacion`(`iduser` INT)
+BEGIN
+   select id,nombre,fechainicio,observaciones
+   from planmanejofumigacion
+   order by id;
+END$$
+DELIMITER ;
+
+
+
+
+
+DROP FUNCTION IF EXISTS saveplanmanejofumigacion;
+
+
+DELIMITER $$
+CREATE FUNCTION `saveplanmanejofumigacion`(`vid` INT, `vnombre` VARCHAR(200), `vfechainicio` VARCHAR(50), `vobservaciones` VARCHAR(50), `vidresponsable` INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que almacena un plan de manejo fumigacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from planmanejofumigacion where nombre = vnombre and fechainicio = vfechainicio)
+		THEN
+			insert into planmanejofumigacion(nombre,fechainicio,observaciones,idresponsable)
+			VALUES (vnombre,vfechainicio,vobservaciones,vidresponsable);
+			set res = 1;
+		END IF;
+
+RETURN res;
+	
+END$$
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER $$
+CREATE FUNCTION `updateplanmanejofumigacion`(`vid` INT, `vnombre` VARCHAR(200), `vfechainicio` VARCHAR(50), `vobservaciones` VARCHAR(50), `vidresponsable` INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que modifica un plan de manejo fumigacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from planmanejofumigacion where fechainicio=vfechainicio and id<>vid)
+		THEN
+
+            UPDATE planmanejofumigacion
+            SET  nombre=vnombre, fechainicio=vfechainicio, 
+                   observaciones=vobservaciones
+            WHERE id=vid;
+
+	set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END$$
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER $$
+CREATE FUNCTION `deleteplanmanejofumigacion`(`vid` INT) RETURNS int(1)
+    READS SQL DATA
+    DETERMINISTIC
+    COMMENT 'Funcion que elimina un plan de manejo fumigacion'
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    DELETE FROM planmanejofumigacion WHERE id = vid;
+    SET res = 1;
+    RETURN res;
+
+END$$
+DELIMITER ;
+
+
+
+insert into menu (nombre,codigo,padre,descripcion,prioridad,icono) values ('PM fumigacion','/plan-manejo-fumigacion','-1','','17','bug');
