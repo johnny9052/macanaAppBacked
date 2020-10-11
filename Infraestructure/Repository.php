@@ -107,12 +107,12 @@ class Repository extends Internationalization {
 
         if (isset($vec)) {
             echo(json_encode(['code' => '1',
-                'profilePk' => $vec[0]['id'],
-                'firstName' => $vec[0]['primer_nombre'],
-                'lastName' => $vec[0]['primer_apellido'],
-                'typeUser' => $vec[0]['rol'],
-                'image_perfil' => $vec[0]['foto'],
-                'typeUserName' => $vec[0]['rol_nombre']
+                'profilePk'     => $vec[0]['id'],
+                'firstName'     => $vec[0]['primer_nombre'],
+                'lastName'      => $vec[0]['primer_apellido'],
+                'typeUser'      => $vec[0]['rol'],
+                'image_perfil'  => $vec[0]['foto'],
+                'typeUserName'  => $vec[0]['rol_nombre']
             ]));
         } else {
             echo '{"code" : "error", "msg" :"' . $this->getLogInError() . '" }';

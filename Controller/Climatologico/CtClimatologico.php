@@ -16,10 +16,13 @@ $pluviometria = getInfo('pluviometria');
 $observaciones = getInfo('observaciones');
 $idresponsable = getInfo('idresponsable');
 
+/* Caracter de separado para archivos CSV */
+$caracter = getInfo('caracter');
 
 /*DEFINICION DE OBJETOS*/
-$obj = new ClimatologicoDTO($id, $fecha, $nubosidad, $pluviometria, $observaciones, $idresponsable);
+$obj = new ClimatologicoDTO($id, $fecha, $nubosidad, $pluviometria, $observaciones, $idresponsable,$caracter);
 $dao = new ClimatologicoDAO();
+
 
 /* CONTROL DE ACCIONES */
 ExecuteAction($action, $obj, $dao);

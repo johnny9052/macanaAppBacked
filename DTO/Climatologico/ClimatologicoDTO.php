@@ -10,14 +10,16 @@ class ClimatologicoDTO extends BaseDTO {
     private $pluviometria;
     private $observaciones;
     private $idresponsable;
+    private $caracter;
     
-    function __construct($id, $fecha, $nubosidad, $pluviometria, $observaciones, $idresponsable) {
+    function __construct($id, $fecha, $nubosidad, $pluviometria, $observaciones, $idresponsable, $caracter) {
         $this->id = $id;
         $this->fecha = $fecha;
         $this->nubosidad = $nubosidad;
         $this->pluviometria = $pluviometria;
         $this->observaciones = $observaciones;
         $this->idresponsable = $idresponsable;
+        $this->caracter = $caracter;
     }
     
     function getId() {
@@ -44,6 +46,10 @@ class ClimatologicoDTO extends BaseDTO {
         return $this->idresponsable;
     }
 
+    function getCaracter() {
+        return $this->caracter;
+    }
+
     function setId($id) {
         $this->id = $id;
     }
@@ -68,7 +74,8 @@ class ClimatologicoDTO extends BaseDTO {
         $this->idresponsable = $idresponsable;
     }
 
-
-
-
+    function setCaracter($caracter) {
+        $this->caracter = $caracter;
+    }
+      
 }

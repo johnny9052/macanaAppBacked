@@ -21,9 +21,17 @@ $idresponsable  = getInfo('idresponsable');
 $token = getInfo('token');
 $security = new Security();
 
+/* DATOS NECESARIOS PARA EL REPORTE */
+
+/* Caracter de separado para archivos CSV */
+$caracter = getInfo('caracter');
+
+/* END DATOS NECESARIOS PARA EL REPORTE */
+
+
 if ($security->validarTokenUser($token)) {
     /* DEFINICION DE OBJETOS */
-    $obj = new FertilizanteDTO($id, $nombre, $marca,$idpresentacion,$idresponsable);
+    $obj = new FertilizanteDTO($id, $nombre, $marca,$idpresentacion,$idresponsable, $caracter);
     $dao = new FertilizanteDAO();
 
     /* CONTROL DE ACCIONES */

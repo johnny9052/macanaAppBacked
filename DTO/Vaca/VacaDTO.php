@@ -13,8 +13,9 @@ class VacaDTO extends BaseDTO {
     private $tipoanimal;
     private $edad;
     private $idresponsable;
-    
-    function __construct($id, $numero, $nombre, $idRotacion, $sexo, $raza, $tipoanimal, $edad, $idresponsable) {
+    private $caracter;
+            
+    function __construct($id, $numero, $nombre, $idRotacion, $sexo, $raza, $tipoanimal, $edad, $idresponsable, $caracter) {
         $this->id = $id;
         $this->numero = $numero;
         $this->nombre = $nombre;
@@ -24,8 +25,8 @@ class VacaDTO extends BaseDTO {
         $this->tipoanimal = $tipoanimal;
         $this->edad = $edad;
         $this->idresponsable = $idresponsable;
+        $this->caracter = $caracter;
     }
-    
     
     function getId() {
         return $this->id;
@@ -61,6 +62,10 @@ class VacaDTO extends BaseDTO {
 
     function getIdresponsable() {
         return $this->idresponsable;
+    }
+
+    function getCaracter() {
+        return $this->caracter;
     }
 
     function setId($id) {
@@ -99,7 +104,8 @@ class VacaDTO extends BaseDTO {
         $this->idresponsable = $idresponsable;
     }
 
+    function setCaracter($caracter) {
+        $this->caracter = $caracter;
+    }
 
-
-    
 }

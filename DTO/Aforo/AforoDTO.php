@@ -257,5 +257,4 @@ class AforoDTO extends BaseDTO {
     function setCaracter($caracter) {
         $this->caracter = $caracter;
     }
-  
 }

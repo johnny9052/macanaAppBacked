@@ -177,7 +177,7 @@ class AforoDAO {
     }
 
     public function ReportCSVList(AforoDTO $obj) {
-        $query = $this->repository->buildQuery("listaforo", array((int) $obj->getId()));
+        $query = $this->repository->buildQuery("listaforocsv", array((int) $obj->getId()));
         $this->repository->BuildReportCSV($query, 'lista de aforos', $obj->getCaracter());
     }
 

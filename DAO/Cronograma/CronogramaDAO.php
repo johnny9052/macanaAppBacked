@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Definicion de acciones para la gestion de los vacaes
+ * Definicion de acciones para la gestion de los roles
  * @author Johnny Alexander Salazar
  * @version 0.1
  */
-class VacaDAO {
+class CronogramaDAO {
 
     private $repository;
 
@@ -16,76 +16,85 @@ class VacaDAO {
 
     /**
      * Ejecuta un guardar en la base de datos
-     * @param VacaDTO $obj 
+     * @param CronogramaDTO $obj 
      * @return void      
      * @author Johnny Alexander Salazar
      * @version 0.1
      */
-    public function Save(VacaDTO $obj) {
-        $query = $this->repository->buildQuerySimply("savevaca", array((int) $obj->getId(),
-            (string) $obj->getNumero(), (string) $obj->getNombre(),
-            (int) $obj->getIdRotacion(),(int) $obj->getSexo(),
-            (int) $obj->getRaza(),(int) $obj->getTipoanimal(),
-            (int) $obj->getEdad(), (int) $obj->getIdresponsable()));
+    public function Save(CronogramaDTO $obj) {
+        $query = $this->repository->buildQuerySimply("savecronograma", array(
+            (int)    $obj->getId(),
+            (int)    $obj->getIdactividad(),
+            (string) $obj->getFechaProgramada(),
+            (string) $obj->getFechaEjecutada(),
+            (int)    $obj->getIdPotrero(),
+            (int)    $obj->getIdResponsable(),
+            (int)    $obj->getEjecutado()));
+            //echo ($query);
         $this->repository->ExecuteTransaction($query);
     }
 
     /**
      * Ejecuta un listar en la base de datos
-     * @param VacaDTO $obj
+     * @param CronogramaDTO $obj
      * @param boolean $type indica si se quiere filtro o no 
      * @return void      
      * @author Johnny Alexander Salazar
      * @version 0.1
      */
-    public function ListAll(VacaDTO $obj, $type) {
-        $query = $this->repository->buildQuery("listvaca", array((int) $obj->getIdUser()));
+    public function ListAll(CronogramaDTO $obj, $type) {
+        $query = $this->repository->buildQuery("listcronograma", array((int) $obj->getIdUser()));
+        //echo ($query);
         $this->repository->Execute($query);
     }
 
     /**
      * Ejecuta un buscar en la base de datos
-     * @param VacaDTO $obj 
+     * @param CronogramaDTO $obj 
      * @return void      
      * @author Johnny Alexander Salazar
      * @version 0.1
      */
-    public function Search(VacaDTO $obj) {
-        $query = $this->repository->buildQuery("searchvaca", array((int) $obj->getId()));
+    public function Search(CronogramaDTO $obj) {
+        $query = $this->repository->buildQuery("searchcronograma", array((int) $obj->getId()));
         $this->repository->Execute($query);
     }
 
     /**
      * Ejecuta un actualizar en la base de datos
-     * @param VacaDTO $obj 
+     * @param CronogramaDTO $obj 
      * @return void      
      * @author Johnny Alexander Salazar
      * @version 0.1
      */
-    public function Update(VacaDTO $obj) {
-         $query = $this->repository->buildQuerySimply("updatevaca", array((int) $obj->getId(),
-            (string) $obj->getNumero(), (string) $obj->getNombre(),
-            (int) $obj->getIdRotacion(),(int) $obj->getSexo(),
-            (int) $obj->getRaza(),(int) $obj->getTipoanimal(),
-            (int) $obj->getEdad(), (int) $obj->getIdresponsable()));
+    public function Update(CronogramaDTO $obj) {
+         $query = $this->repository->buildQuerySimply("updatecronograma", array(
+            (int)    $obj->getId(),
+            (int)    $obj->getIdactividad(),
+            (string) $obj->getFechaProgramada(),
+            (string) $obj->getFechaEjecutada(),
+            (int)    $obj->getIdPotrero(),
+            (int)    $obj->getIdResponsable(),
+            (int)    $obj->getEjecutado()));
+       // echo ($query);
         $this->repository->ExecuteTransaction($query);
     }
 
     /**
      * Ejecuta un borrar en la base de datos
-     * @param VacaDTO $obj 
+     * @param CronogramaDTO $obj 
      * @return void      
      * @author Johnny Alexander Salazar
      * @version 0.1
      */
-    public function Delete(VacaDTO $obj) {
-        $query = $this->repository->buildQuerySimply("deletevaca", array((int) $obj->getId()));
+    public function Delete(CronogramaDTO $obj) {
+        $query = $this->repository->buildQuerySimply("deletecronograma", array((int) $obj->getId()));
         $this->repository->ExecuteTransaction($query);
     }
+    
+public function GeneratePDFList(CronogramaDTO $obj) {
 
-    public function GeneratePDFList(VacaDTO $obj) {
-
-        $query = $this->repository->buildQuery("listvaca", array((int) $obj->getId()));
+        $query = $this->repository->buildQuery("listcronograma", array((int) $obj->getId()));
 
         //Longitud maxima de los caracteres del listado
         $max = 200;
@@ -123,8 +132,9 @@ class VacaDAO {
         $this->repository->BuildPDF($cadenaHTML, $vec[0][1]);
     }
 
-public function ReportCSVList(VacaDTO $obj) {
-    $query = $this->repository->buildQuery("listvacacsv", array((int) $obj->getId()));
-    $this->repository->BuildReportCSV($query, 'lista de vacas', $obj->getCaracter());
+public function ReportCSVList(CronogramaDTO $obj) {
+    $query = $this->repository->buildQuery("listcronogramacsv", array((int) $obj->getId()));
+    $this->repository->BuildReportCSV($query, 'lista de actividades', $obj->getCaracter());
    }
+
 }

@@ -13,8 +13,16 @@ $nombre = getInfo('nombre');
 $cantvacas = getInfo('cantvacas');
 $idresponsable = getInfo('idresponsable');
 
+/* DATOS NECESARIOS PARA EL REPORTE */
+
+/* Caracter de separado para archivos CSV */
+$caracter = getInfo('caracter');
+
+/* END DATOS NECESARIOS PARA EL REPORTE */
+
+
 /*DEFINICION DE OBJETOS*/
-$obj = new RotacionesDTO($id, $nombre, $cantvacas, $idresponsable);
+$obj = new RotacionesDTO($id, $nombre, $cantvacas, $idresponsable, $caracter);
 $dao = new RotacionesDAO();
 
 /* CONTROL DE ACCIONES */

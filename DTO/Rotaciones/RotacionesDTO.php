@@ -8,17 +8,15 @@ class RotacionesDTO extends BaseDTO {
     private $nombre;
     private $cantvacas;
     private $idresponsable;
-
+    private $caracter;
     
-    function __construct($id, $nombre, $cantvacas, $idresponsable) {
+    function __construct($id, $nombre, $cantvacas, $idresponsable, $caracter) {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->cantvacas = $cantvacas;
         $this->idresponsable = $idresponsable;
+        $this->caracter = $caracter;
     }
-    
-    
-    
     function getId() {
         return $this->id;
     }
@@ -33,6 +31,10 @@ class RotacionesDTO extends BaseDTO {
 
     function getIdresponsable() {
         return $this->idresponsable;
+    }
+
+    function getCaracter() {
+        return $this->caracter;
     }
 
     function setId($id) {
@@ -51,7 +53,8 @@ class RotacionesDTO extends BaseDTO {
         $this->idresponsable = $idresponsable;
     }
 
-
-
+    function setCaracter($caracter) {
+        $this->caracter = $caracter;
+    }
 
 }

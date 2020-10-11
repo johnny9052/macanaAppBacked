@@ -9,13 +9,17 @@ class FertilizanteDTO extends BaseDTO {
     private $marca;
     private $idpresentacion;
     private $idresponsable;
-    function __construct($id, $nombre, $marca, $idpresentacion, $idresponsable) {
+    private $caracter;
+    
+    function __construct($id, $nombre, $marca, $idpresentacion, $idresponsable, $caracter) {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->marca = $marca;
         $this->idpresentacion = $idpresentacion;
         $this->idresponsable = $idresponsable;
+        $this->caracter = $caracter;
     }
+
     function getId() {
         return $this->id;
     }
@@ -36,6 +40,10 @@ class FertilizanteDTO extends BaseDTO {
         return $this->idresponsable;
     }
 
+    function getCaracter() {
+        return $this->caracter;
+    }
+
     function setId($id) {
         $this->id = $id;
     }
@@ -54,6 +62,10 @@ class FertilizanteDTO extends BaseDTO {
 
     function setIdresponsable($idresponsable) {
         $this->idresponsable = $idresponsable;
+    }
+
+    function setCaracter($caracter) {
+        $this->caracter = $caracter;
     }
 
 }

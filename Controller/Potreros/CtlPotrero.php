@@ -17,8 +17,15 @@ $estado = getInfo('estado');
 $idresponsable = getInfo('idresponsable');
 $ordenrotacion = getInfo('ordenrotacion');
 
+/* DATOS NECESARIOS PARA EL REPORTE */
+
+/* Caracter de separado para archivos CSV */
+$caracter = getInfo('caracter');
+
+/* END DATOS NECESARIOS PARA EL REPORTE */
+
 /*DEFINICION DE OBJETOS*/
-$obj = new PotreroDTO($id, $numero, $area, $observacion, $idrotacion,$ordenrotacion, $estado,  $idresponsable);
+$obj = new PotreroDTO($id, $numero, $area, $observacion, $idrotacion,$ordenrotacion, $estado,  $idresponsable, $caracter);
 $dao = new PotreroDAO();
 
 /* CONTROL DE ACCIONES */

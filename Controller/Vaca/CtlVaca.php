@@ -18,8 +18,16 @@ $tipoanimal = getInfo('tipoanimal');
 $edad = getInfo('edad');
 $idresponsable = getInfo('idresponsable');
 
+/* DATOS NECESARIOS PARA EL REPORTE */
+
+/* Caracter de separado para archivos CSV */
+$caracter = getInfo('caracter');
+
+/* END DATOS NECESARIOS PARA EL REPORTE */
+
+
 /*DEFINICION DE OBJETOS*/
-$obj = new VacaDTO($id, $numero, $nombre, $idRotacion, $sexo, $raza, $tipoanimal, $edad, $idresponsable);
+$obj = new VacaDTO($id, $numero, $nombre, $idRotacion, $sexo, $raza, $tipoanimal, $edad, $idresponsable, $caracter);
 $dao = new VacaDAO();
 
 /* CONTROL DE ACCIONES */
